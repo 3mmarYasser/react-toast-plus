@@ -1,0 +1,50 @@
+{
+  "name": "react-toast-plus",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/react-toast-plus.umd.cjs",
+  "module": "./dist/react-toast-plus.js",
+  "types": "./dist/react-toast-plus.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react-toast-plus.js",
+      "require": "./dist/react-toast-plus.umd.cjs"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "rimraf dist",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/node": "^22.5.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "rimraf": "^6.0.1",
+    "sass": "^1.77.8",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.1.0",
+    "vite-plugin-lib-inject-css": "^2.1.1",
+    "vite-tsconfig-paths": "^5.0.1"
+  }
+}
