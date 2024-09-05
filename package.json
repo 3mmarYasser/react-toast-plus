@@ -18,11 +18,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "vite",
     "prebuild": "rimraf dist",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "dev": "vite"
   },
   "dependencies": {
     "react": "^18.3.1",
