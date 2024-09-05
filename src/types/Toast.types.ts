@@ -4,7 +4,7 @@ import React from "react";
     id: string;
     message: string;
     onClose: (id: string) => void;
-    type?: 'success' | 'error' | 'warning' | 'info';
+    type?: 'success' | 'error' | 'warning' | 'info' |'empty';
 }
 interface State {
     toasts: ToastData[];
@@ -29,4 +29,4 @@ interface ToastContextType {
     dispatch: Dispatch;
 }
 
-export type { ToastData, ToastContextType  ,Action ,State , Dispatch};
+export type { ToastData, ToastContextType  , Action ,State , Dispatch};
