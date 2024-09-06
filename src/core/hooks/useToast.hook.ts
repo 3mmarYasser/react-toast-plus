@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import {ToastContext} from "../context/ToastProvider/ToastProvider.context.tsx";
-import {ActionTypes, ToastData} from "../../types/Toast.types.ts";
+import {ActionTypes, ToastOptions, ToastProps, ToastType} from "../../types/Toast.types.ts";
 import {generateId} from "../../utils/generateId.helper.ts";
 
 export const useToast = () => {
@@ -10,7 +10,7 @@ export const useToast = () => {
     }
     const { dispatch } = context;
 
-    const addToast = (message: ToastData["message"], type: ToastData['type']):Pick<ToastData, "id"> => {
+    const addToast = (message: ToastProps["message"], type: ToastType ,options?:ToastOptions):Pick<ToastProps, "id"> => {
         const id = generateId();
         dispatch({
             type: ActionTypes.ADD_TOAST,
@@ -19,17 +19,20 @@ export const useToast = () => {
                 message,
                 type,
                 onClose: removeToast,
+                options,
             },
         });
         return {id};
     };
-    addToast.success = (message: string) => addToast(message, 'success');
-    addToast.error = (message: string) => addToast(message, 'error');
-    addToast.warning = (message: string) => addToast(message, 'warning');
-    addToast.info = (message: string) => addToast(message, 'info');
-    addToast.empty = (message: string) => addToast(message, 'empty');
 
-    const removeToast = (id: ToastData['id']) => {
+    const createToastMethod = (type: ToastType) => (message: ToastProps["message"], options?: ToastOptions) => addToast(message, type, options);
+    addToast.success = createToastMethod('success');
+    addToast.error = createToastMethod('error');
+    addToast.warning = createToastMethod('warning');
+    addToast.info = createToastMethod('info');
+    addToast.empty = createToastMethod('empty');
+
+    const removeToast = (id: ToastProps['id']) => {
         dispatch({ type: ActionTypes.REMOVE_TOAST, id });
     };
     removeToast.byIndex = (index: number) => {
@@ -43,7 +46,7 @@ export const useToast = () => {
     const removeAllToasts = () => {
         dispatch({ type: ActionTypes.REMOVE_ALL_TOASTS });
     };
-    const updateToast = (toast: Partial<ToastData> & Pick<ToastData, 'id'>) => {
+    const updateToast = (toast: Partial<ToastProps> & Pick<ToastProps, 'id'>) => {
         dispatch({ type: ActionTypes.UPDATE_TOAST, toast });
     };
 
@@ -52,5 +55,6 @@ export const useToast = () => {
         removeToast,
         removeAllToasts,
         updateToast,
+        toasts: context.state.toasts
     };
 };

@@ -1,14 +1,35 @@
-import { FunctionComponent } from 'react';
-import {ToastData} from "../../types/Toast.types.ts";
+import {FunctionComponent, useEffect} from 'react';
+import {ToastProps} from "../../types/Toast.types.ts";
 
-type Props = ToastData;
+type Props = ToastProps;
 
-const ToasterComponent: FunctionComponent<Props> = ({id  ,message ,onClose ,type = 'info'}) => {
+const ToasterComponent: FunctionComponent<Props> = ({id  ,message ,onClose ,type = 'info' ,options ={}}) => {
+    const {className ,style ,autoClose , lifetime} = options;
+    useEffect(() => {
+        if (autoClose) {
+            const timer = setTimeout(() => {
+                onClose(id);
+            }, lifetime);
+
+            return () => clearTimeout(timer);
+        }
+    }, [id, onClose, autoClose, lifetime]);
 
   return (
-      <div className={`toast ${type}`}>
-          <p>{message}</p>
-          <button onClick={() => onClose(id)}>Close</button>
+      <div className={className} style={{
+          display: 'flex',
+          background:"white",
+          color:"black",
+          willChange:"transform",
+          boxShadow:"0 0 10px rgba(0,0,0,0.1)",
+          maxWidth:"15rem",
+          pointerEvents:"auto",
+          padding:"10px 8px",
+          borderRadius:"8px",
+          ...style,
+      }}>
+          <p>{message} {type}</p>
+           <button onClick={() => onClose(id)}>X</button>
       </div>
   );
 };

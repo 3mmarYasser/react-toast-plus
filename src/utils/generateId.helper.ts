@@ -1,3 +1,3 @@
-import {ToastData} from "../types/Toast.types.ts";
+import {ToastProps} from "../types/Toast.types.ts";
 
-export const generateId = ():ToastData['id'] => `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+export const generateId = ():ToastProps['id'] => `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;

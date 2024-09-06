@@ -1,20 +1,23 @@
 import  { FunctionComponent } from 'react';
-import {ToastData} from "../../types/Toast.types.ts";
-import Toaster from "../Toaster/Toaster.component.tsx";
+import {ToastContainerProps} from "../../types/Toast.types.ts";
+import {classNames} from "../../utils/classNames.helper.ts";
 
-export interface ToastContainerProps {
-    toasts: ToastData[];
-}
 
-type Props = ToastContainerProps;
 
-const ToastContainer: FunctionComponent<Props> = ({toasts}) => {
+const ToastContainer: FunctionComponent<ToastContainerProps> = ({children , className , style}) => {
 
   return (
-      <div className="toast-container">
-          {toasts.map((toast) => (
-              <Toaster key={toast.id} {...toast} />
-          ))}
+      <div className={classNames("react-toast-plus" , className)} style={{
+          position: 'fixed',
+          zIndex: 9999,
+          top: 5,
+          left: 5,
+          right: 5,
+          bottom: 5,
+          pointerEvents: 'none',
+          ...style
+      }}>
+          {children}
       </div>
   );
 };

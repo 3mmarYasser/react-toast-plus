@@ -1,27 +1,57 @@
-import  { FunctionComponent } from 'react';
-import {useToast} from "react-toast-plus";
+import React, {FunctionComponent, useEffect} from 'react';
+import { ToastType, useToast} from "react-toast-plus";
 
 
-let idx = 0;
+interface FormData {
+    msg: string;
+    type: ToastType;
+}
+
 const App: FunctionComponent = () => {
-    const {addToast , removeToast} = useToast();
-    const testToasts = () => {
-        console.log('Add Toasts');
-       const {id} =  addToast.success(`Hello Im One With IDX ${idx}`);
-       idx++;
-       console.log(id);
+    const {toasts , addToast} = useToast();
+    useEffect(() => {
+        console.log(     toasts);
+    },[toasts] )
+
+
+    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" });
+
+    function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
     }
-    const updateToastsTest = () => {
-        console.log('Update Toasts');
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        addToast(formData.msg , formData.type ,{
+            className: 'custom-toast',
+        } );
+        addToast.error("Hello" ,{
+
+
+        })
     }
-    const removeToastsTest = () => {
-        removeToast.byIndex(1);
-    }
+
   return (<>
-      <button onClick={testToasts}>Click Me </button>
-      <button onClick={updateToastsTest}>Click Me2</button>
-      <button onClick={removeToastsTest}>remove the one by idx 1</button>
-  </>);
+      <form onSubmit={handleSubmit}>
+          <label>
+              Message:
+              <input type="text" name="msg" value={formData.msg} onChange={handleInputChange}/>
+          </label>
+          <br/>
+          <label>
+              Type:
+              <select name={"type"} onChange={handleInputChange}>
+                    <option value="empty">Empty</option>
+                    <option value="info">Info</option>
+                    <option value="success">Success</option>
+                    <option value="warning">Warning</option>
+                    <option value="error">Error</option>
+              </select>
+          </label>
+          <br/>
+          <button type="submit">Make A Toast</button>
+      </form>  </>);
 
 };
 
