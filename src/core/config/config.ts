@@ -10,5 +10,5 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     pauseOnHover: false,
     draggable: true,
     transitionDuration: TOAST_TRANSITION_DURATION,
-    position: TOAST_PLACEMENT,
+    placement: TOAST_PLACEMENT,
 }

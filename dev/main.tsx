@@ -14,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
             toastOptions={{
                 className: 'toast dgfdg',
                 lifetime:5000,
+                placement:"bottom-right",
                 style:{
                     background:"yellow",
                     color:"aqua"

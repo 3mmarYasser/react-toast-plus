@@ -5,8 +5,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
     const {
         className ,
         style ,
-        // autoClose ,
-        lifetime ,
+        lifetime
 
     } = options;
     const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
@@ -16,15 +15,12 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
             const interval = setInterval(() => {
                 const timeLeft = remainingTime();
                 setRemaining(timeLeft);
-                console.log(`${id}_${message} time left : ${timeLeft}`);
-                // If time left is 0, close the toast
                 if (timeLeft <= 0) {
                     clearInterval(interval);
                     onClose(id);
                 }
-            }, 100); // Update every 100ms for smoother animation
+            }, 100);
 
-            // Cleanup the interval when the component unmounts
             return () => clearInterval(interval);
         }
     }, [id, onClose, remainingTime]);

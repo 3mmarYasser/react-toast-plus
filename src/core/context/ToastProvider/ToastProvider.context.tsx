@@ -37,20 +37,20 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
         {children}
         {createPortal(
             <ContainerComponent {...containerOpts}>
-              {state.toasts.map((toast) => {
-                const {options , ...rest} = toast;
-                const typeSpecificOptions:ToastOptions = typeOptionsMap[toast.type as ToastType] || {};
-                const mergedOptions = mergeOptions(
-                    TOAST_DEFAULT_OPTIONS,            // Default toast options
-                    defaultOpts,                       // Provider-level default options
-                    typeSpecificOptions,               // Type-specific options (success, error, etc.)
-                    options                            // Toast-specific options
-                );
+                {state.toasts.map((toast ,idx) => {
+                  const {options , ...rest} = toast;
+                  const typeSpecificOptions:ToastOptions = typeOptionsMap[toast.type as ToastType] || {};
+                  const mergedOptions = mergeOptions(
+                      TOAST_DEFAULT_OPTIONS,            // Default toast options
+                      defaultOpts,                       // Provider-level default options
+                      typeSpecificOptions,               // Type-specific options (success, error, etc.)
+                      options                            // Toast-specific options
+                  );
 
-                return (<ToastController key={toast.id} toastContextProps={{...rest , options:mergedOptions}}>
+                  return (<ToastController key={toast.id} index={idx} toastContextProps={{...rest , options:mergedOptions}}>
                     {ToastComponent}
-                </ToastController>)
-              })}
+                  </ToastController>)
+                })}
             </ContainerComponent>
             ,portalSelector  )}
       </ToastContext.Provider>

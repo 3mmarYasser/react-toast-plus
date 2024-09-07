@@ -1,14 +1,9 @@
-import { useContext } from 'react';
-import {ToastContext} from "../context/ToastProvider/ToastProvider.context.tsx";
 import {ActionTypes, ToastOptions, ToastContextProps, ToastType} from "../../types/Toast.types.ts";
 import {generateId} from "../../utils/generateId.helper.ts";
+import {useToastStore} from "./useToastStore.hook.ts";
 
 export const useToast = () => {
-    const context = useContext(ToastContext);
-    if (!context) {
-        throw new Error('useToast must be used within a ToastProvider');
-    }
-    const { dispatch } = context;
+    const {dispatch , toasts} = useToastStore();
 
     const addToast = (message: ToastContextProps["message"], type: ToastType ,options?:ToastOptions):Pick<ToastContextProps, "id"> => {
         const id = generateId();
@@ -38,7 +33,7 @@ export const useToast = () => {
         dispatch({ type: ActionTypes.REMOVE_TOAST, id });
     };
     removeToast.byIndex = (index: number) => {
-        const id = context.state.toasts[index]?.id;
+        const id = toasts[index]?.id;
         if (id) {
             removeToast(id);
         }else {
@@ -48,15 +43,15 @@ export const useToast = () => {
     const removeAllToasts = () => {
         dispatch({ type: ActionTypes.REMOVE_ALL_TOASTS });
     };
-    const updateToast = (toast: Partial<ToastContextProps> & Pick<ToastContextProps, 'id'>) => {
+    const updateToast = (toast: Omit<Partial<ToastContextProps>, "onClose" |"element" |"id"> & Pick<ToastContextProps, 'id'>) => {
         dispatch({ type: ActionTypes.UPDATE_TOAST, toast });
     };
+
 
     return {
         addToast,
         removeToast,
         removeAllToasts,
         updateToast,
-        toasts: context.state.toasts
     };
 };

@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect} from 'react';
-import { ToastType, useToast} from "react-toast-plus";
+import {ToastType, useToast, useToastStore} from "react-toast-plus";
 
 
 interface FormData {
@@ -8,7 +8,8 @@ interface FormData {
 }
 
 const App: FunctionComponent = () => {
-    const {toasts , addToast} = useToast();
+    const { addToast ,updateToast} = useToast();
+    const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
     },[toasts] )
@@ -25,9 +26,31 @@ const App: FunctionComponent = () => {
         event.preventDefault();
        const {id} = addToast(formData.msg , formData.type ,{
             className: 'custom-toast',
-            lifetime: 50000,
+            lifetime: 500000,
         } );
-       console.log(id);
+       setTimeout(() => {
+           updateToast({
+               id,
+                message: `
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                Updated message
+                `,
+
+           });
+       },10000)
     }
 
   return (<>

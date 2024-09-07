@@ -1,7 +1,7 @@
 import {ToastOptions} from "react-toast-plus";
 import {classNames} from "./classNames.helper.ts";
 
-export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | undefined>) => {
+export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | undefined>):ToastOptions => {
     return {
         // Merge className from all options
         className: classNames(
@@ -27,7 +27,7 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
         // For transition and other non-style properties, use the last defined value
         transition: optionsArray.reverse().find(option => option?.transition)?.transition,
         transitionDuration: optionsArray.reverse().find(option => option?.transitionDuration)?.transitionDuration,
-        position: optionsArray.reverse().find(option => option?.position)?.position,
+        placement: optionsArray.reverse().find(option => option?.placement)?.placement,
         icon: optionsArray.reverse().find(option => option?.icon)?.icon,
 
         // Merge icon props (className and style)

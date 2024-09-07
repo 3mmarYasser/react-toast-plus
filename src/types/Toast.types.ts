@@ -12,7 +12,7 @@ interface ToastOptions {
     progressStyle?: React.CSSProperties;
     transition?: React.ElementType;
     transitionDuration?: number;
-    position?: Placement;
+    placement?: Placement;
     icon?: ReactNode;
     iconProps?: {
         className?: string;
@@ -27,7 +27,9 @@ interface ToastContextProps{
     onClose: (id: string) => void;
     type?:ToastType;
     options?: ToastOptions;
-
+    element?: {
+        height?: number;
+    }
 }
 interface AutoCloseHandler {
     start: (duration: number, onEnd: ToastContextProps["onClose"]) => void;
@@ -104,6 +106,7 @@ interface ToastProviderProps{
 interface ToastControllerProps {
     children: React.ElementType<ToastProps>;
     toastContextProps:ToastContextProps;
+    index:number;
 }
 
 export type
