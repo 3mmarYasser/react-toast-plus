@@ -30,6 +30,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     info: infoOptions,
     empty: emptyOptions,
   };
+
   return (
       <ToastContext.Provider value={{state, dispatch}}>
         {children}
