@@ -21,7 +21,7 @@ interface ToastOptions {
 }
 type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
 
-interface ToastProps {
+interface ToastContextProps{
     id: string;
     message: string;
     onClose: (id: string) => void;
@@ -29,8 +29,20 @@ interface ToastProps {
     options?: ToastOptions;
 
 }
+interface AutoCloseHandler {
+    start: (duration: number, onEnd: ToastContextProps["onClose"]) => void;
+    pause: () => void;
+    resume: () => void;
+    clear: () => void;
+    remainingTime: () => number;
+    isRunning: () => boolean;
+}
+
+interface ToastProps extends ToastContextProps, Partial<AutoCloseHandler>{
+
+}
 interface State {
-    toasts: ToastProps[];
+    toasts: ToastContextProps[];
 }
 export enum ActionTypes {
     ADD_TOAST = 'ADD_TOAST',
@@ -40,9 +52,9 @@ export enum ActionTypes {
 }
 
 type Action =
-    | { type: ActionTypes.ADD_TOAST; toast: ToastProps }
-    | { type: ActionTypes.REMOVE_TOAST; id: ToastProps["id"] }
-    | { type: ActionTypes.UPDATE_TOAST; toast: Partial<ToastProps> & Pick<ToastProps, "id"> }
+    | { type: ActionTypes.ADD_TOAST; toast: ToastContextProps }
+    | { type: ActionTypes.REMOVE_TOAST; id: ToastContextProps["id"] }
+    | { type: ActionTypes.UPDATE_TOAST; toast: Partial<ToastContextProps> & Pick<ToastContextProps, "id"> }
     | { type: ActionTypes.REMOVE_ALL_TOASTS };
 
 type Dispatch = React.Dispatch<Action>;
@@ -89,4 +101,14 @@ interface ToastProviderProps{
     toastOptions?:MainToastOptions;
 }
 
-export type { ToastProps ,ToastType,ToastOptions, ToastContextType  , Action ,State , Dispatch , Placement ,ToastProviderProps , ToastContainerProps ,containerOptions} ;
+interface ToastControllerProps {
+    children: React.ElementType<ToastProps>;
+    toastContextProps:ToastContextProps;
+}
+
+export type
+{
+    ToastContextProps ,ToastType,ToastOptions, ToastContextType  ,
+    Action ,State , Dispatch , Placement ,ToastProviderProps ,
+    ToastContainerProps ,containerOptions ,AutoCloseHandler ,ToastProps , ToastControllerProps
+} ;

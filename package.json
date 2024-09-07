@@ -22,7 +22,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "prepublish": "npm run build",
-    "dev": "vite"
+    "dev": "vite --host --port 3000"
   },
   "dependencies": {
     "react": "^18.3.1",

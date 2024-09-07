@@ -1,41 +1,60 @@
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useEffect, useState} from 'react';
 import {ToastProps} from "../../types/Toast.types.ts";
 
-type Props = ToastProps;
-
-const ToasterComponent: FunctionComponent<Props> = ({id  ,message ,onClose ,type = 'info' ,options ={}}) => {
+const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose ,type = 'info' ,options ={} ,remainingTime}) => {
     const {
         className ,
         style ,
         // autoClose ,
         lifetime ,
+
     } = options;
+    const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
 
-    // useEffect(() => {
-    //     if (autoClose) {
-    //         const timer = setTimeout(() => {
-    //             onClose(id);
-    //         }, lifetime);
-    //
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [id, onClose, autoClose, lifetime]);
+    useEffect(() => {
+        if(remainingTime){
+            const interval = setInterval(() => {
+                const timeLeft = remainingTime();
+                setRemaining(timeLeft);
+                console.log(`${id}_${message} time left : ${timeLeft}`);
+                // If time left is 0, close the toast
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    onClose(id);
+                }
+            }, 100); // Update every 100ms for smoother animation
 
+            // Cleanup the interval when the component unmounts
+            return () => clearInterval(interval);
+        }
+    }, [id, onClose, remainingTime]);
+
+    const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
   return (
       <div className={className} style={{
           display: 'flex',
-          background:"white",
-          color:"black",
-          willChange:"transform",
-          boxShadow:"0 0 10px rgba(0,0,0,0.1)",
-          maxWidth:"15rem",
-          pointerEvents:"auto",
-          padding:"10px 8px",
-          borderRadius:"8px",
+          background: "white",
+          color: "black",
+          willChange: "transform",
+          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+          maxWidth: "15rem",
+          pointerEvents: "auto",
+          padding: "10px 8px",
+          borderRadius: "8px",
           ...style,
       }}>
-          <p>{message} {type} life time : {lifetime}</p>
-           <button onClick={() => onClose(id)}>X</button>
+          <p>{message} {type} life time : {remaining}</p>
+          <button onClick={() => onClose(id)}>X</button>
+          <div
+              style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  height: '4px',
+                  backgroundColor: '#00bfff',  // Customize color
+                  width: `${progressPercentage}%`,
+              }}
+          />
       </div>
   );
 };

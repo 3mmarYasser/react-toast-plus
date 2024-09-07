@@ -23,13 +23,11 @@ const App: FunctionComponent = () => {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        addToast(formData.msg , formData.type ,{
+       const {id} = addToast(formData.msg , formData.type ,{
             className: 'custom-toast',
+            lifetime: 50000,
         } );
-        addToast.error("Hello" ,{
-
-
-        })
+       console.log(id);
     }
 
   return (<>

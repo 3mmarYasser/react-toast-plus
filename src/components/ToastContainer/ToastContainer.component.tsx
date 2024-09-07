@@ -10,10 +10,7 @@ const ToastContainer: FunctionComponent<ToastContainerProps> = ({children , clas
       <div className={classNames("react-toast-plus" , className)} style={{
           position: 'fixed',
           zIndex: 9999,
-          top: 5,
-          left: 5,
-          right: 5,
-          bottom: 5,
+          inset: 5,
           pointerEvents: 'none',
           ...style
       }}>
