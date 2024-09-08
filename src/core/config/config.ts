@@ -12,3 +12,4 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     transitionDuration: TOAST_TRANSITION_DURATION,
     placement: TOAST_PLACEMENT,
 }
+export const Gutter = 6;

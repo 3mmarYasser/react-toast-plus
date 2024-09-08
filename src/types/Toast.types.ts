@@ -67,11 +67,7 @@ type Placement =
     | 'bottom-right'
     | 'top-left'
     | 'top-center'
-    | 'top-right'
-    | 'center-left'
-    | 'center-center'
-    | 'center-right';
-
+    | 'top-right';
 interface ToastContextType {
     state: State;
     dispatch: Dispatch;
@@ -101,12 +97,13 @@ interface ToastProviderProps{
     newestFirst?:boolean;
     containerOptions?:containerOptions;
     toastOptions?:MainToastOptions;
+    gutter?:number;
 }
 
 interface ToastControllerProps {
     children: React.ElementType<ToastProps>;
     toastContextProps:ToastContextProps;
-    index:number;
+    gutter:number;
 }
 
 export type

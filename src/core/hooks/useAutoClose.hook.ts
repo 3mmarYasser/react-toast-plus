@@ -1,57 +1,72 @@
-import {AutoCloseHandler, ToastProps} from "react-toast-plus";
-import {useCallback} from "react";
+import {useCallback, useRef} from "react";
+import {AutoCloseHandler, ToastProps} from "../../types/Toast.types.ts";
 
 export const useAutoClose = (id:ToastProps["id"]): AutoCloseHandler => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    let startTime: number = 0;
-    let remaining: number = 0;
-    let running: boolean = false;
+    const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
+    const startTimeRef = useRef<number>(0);
+    const remainingRef = useRef<number>(0);
+    const runningRef = useRef<boolean>(false);
 
-    const start:AutoCloseHandler["start"] = (duration, onEnd) => {
-        running = true;
-        startTime = Date.now();
-        remaining = duration;
 
-        timeoutId = setTimeout(() => {
-            running = false;
-            onEnd(id);
-        }, remaining);
-    };
-
-    const pause = () => {
-        if (running && timeoutId) {
-            clearTimeout(timeoutId);
-            remaining -= Date.now() - startTime;
-            running = false;
+    const start: AutoCloseHandler["start"] = useCallback((duration, onEnd) => {
+        if (timeoutIdRef.current) {
+            clearTimeout(timeoutIdRef.current);
         }
-    };
 
-    const resume = () => {
-        if (!running && remaining > 0) {
-            startTime = Date.now();
-            timeoutId = setTimeout(() => {
-                running = false;
-                remaining = 0;
-            }, remaining);
-            running = true;
+        if (!id) return;
+
+        runningRef.current = true;
+        startTimeRef.current = Date.now();
+        remainingRef.current = duration;
+
+        timeoutIdRef.current = setTimeout(() => {
+            runningRef.current = false;
+            if (id) {
+                onEnd(id);
+            }
+        }, remainingRef.current);
+    }, [id]);
+
+    const pause = useCallback(() => {
+        if (runningRef.current && timeoutIdRef.current) {
+            clearTimeout(timeoutIdRef.current);
+            const elapsed = Date.now() - startTimeRef.current;
+            remainingRef.current -= elapsed;
+            runningRef.current = false;
         }
-    };
+    }, []);
 
-    const clear = () => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-            running = false;
+    const resume = useCallback(() => {
+        if (!runningRef.current && remainingRef.current > 0) {
+            runningRef.current = true;
+            startTimeRef.current = Date.now();
+
+            timeoutIdRef.current = setTimeout(() => {
+                runningRef.current = false;
+                remainingRef.current = 0;
+            }, remainingRef.current);
         }
-    };
+    }, []);
 
-    const remainingTime = useCallback(() => {
-        if (running) {
-            return remaining - (Date.now() - startTime);
+    const clear = useCallback(() => {
+        if (timeoutIdRef.current) {
+            clearTimeout(timeoutIdRef.current);
+            timeoutIdRef.current = null;
         }
-        return remaining;
-    },[running, remaining, startTime]);
+        runningRef.current = false;
+        remainingRef.current = 0;
+    }, []);
 
-    const isRunning = () => running;
+    const remainingTime = useCallback((): number => {
+        if (runningRef.current) {
+            return remainingRef.current - (Date.now() - startTimeRef.current);
+        }
+        return remainingRef.current;
+    }, []);
+
+    const isRunning = useCallback((): boolean => {
+        return runningRef.current;
+    }, []);
 
     return {
         start,

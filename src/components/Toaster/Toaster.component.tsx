@@ -5,13 +5,14 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
     const {
         className ,
         style ,
-        lifetime
+        lifetime,
+        autoClose
 
     } = options;
     const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
 
     useEffect(() => {
-        if(remainingTime){
+        if(remainingTime &&autoClose){
             const interval = setInterval(() => {
                 const timeLeft = remainingTime();
                 setRemaining(timeLeft);
@@ -23,7 +24,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
 
             return () => clearInterval(interval);
         }
-    }, [id, onClose, remainingTime]);
+    }, [id, onClose, remainingTime ,autoClose]);
 
     const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
   return (
@@ -40,7 +41,10 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
           ...style,
       }}>
           <p>{message} {type} life time : {remaining}</p>
-          <button onClick={() => onClose(id)}>X</button>
+          <button onClick={() => {
+              // clear?.();
+              onClose(id);
+          }}>X</button>
           <div
               style={{
                   position: 'absolute',

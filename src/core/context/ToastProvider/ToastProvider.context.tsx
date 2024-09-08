@@ -4,14 +4,14 @@ import ToastContainer from "../../../components/ToastContainer/ToastContainer.co
 import {createPortal} from "react-dom";
 import {toastReducer} from "../../store/toast.store.ts";
 import Toaster from "../../../components/Toaster/Toaster.component.tsx";
-import {TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
+import {Gutter, TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
 import {mergeOptions} from "../../../utils/mergeOptions.helper.ts";
 import ToastController from "../../controller/Toast.controller.tsx";
 
 
 export const ToastContext = createContext<ToastContextType |undefined>(undefined);
 
-const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={}}) => {
+const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={} ,gutter = Gutter}) => {
   const [state, dispatch] = useReducer(toastReducer,{
     toasts: []
   })
@@ -37,7 +37,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
         {children}
         {createPortal(
             <ContainerComponent {...containerOpts}>
-                {state.toasts.map((toast ,idx) => {
+                {state.toasts.map((toast) => {
                   const {options , ...rest} = toast;
                   const typeSpecificOptions:ToastOptions = typeOptionsMap[toast.type as ToastType] || {};
                   const mergedOptions = mergeOptions(
@@ -47,7 +47,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
                       options                            // Toast-specific options
                   );
 
-                  return (<ToastController key={toast.id} index={idx} toastContextProps={{...rest , options:mergedOptions}}>
+                  return (<ToastController gutter={gutter}  key={toast.id}  toastContextProps={{...rest , options:mergedOptions}}>
                     {ToastComponent}
                   </ToastController>)
                 })}

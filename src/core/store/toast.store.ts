@@ -8,16 +8,28 @@ export const toastReducer = (state:State , action:Action) :State=>{
                 toasts: [action.toast, ...state.toasts],
             };
         case ActionTypes.REMOVE_TOAST:
-            return {
-                ...state,
-                toasts: state.toasts.filter((toast) => toast.id !== action.id),
-            };
+            if (state.toasts.some((t) => t.id === action.id)) {
+                return {
+                    ...state,
+                    toasts: state.toasts.filter((toast) => toast.id !== action.id),
+                };
+            } return state;
 
         case ActionTypes.UPDATE_TOAST:
             return {
                 ...state,
                 toasts: state.toasts.map((toast) =>
-                    toast.id === action.toast.id ? { ...toast, ...action.toast } : toast
+                    toast.id === action.toast.id ? { ...toast,
+                        ...action.toast,
+                        options: {
+                            ...toast.options,
+                            ...action.toast.options,
+                            iconProps: {
+                                ...toast.options?.iconProps,
+                                ...action.toast.options?.iconProps,}
+                        }
+                } : toast
+
                 ),
             };
         case ActionTypes.REMOVE_ALL_TOASTS:

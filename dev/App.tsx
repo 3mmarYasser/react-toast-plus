@@ -8,7 +8,7 @@ interface FormData {
 }
 
 const App: FunctionComponent = () => {
-    const { addToast ,updateToast} = useToast();
+    const { addToast ,removeToast} = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
@@ -24,37 +24,21 @@ const App: FunctionComponent = () => {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-       const {id} = addToast(formData.msg , formData.type ,{
+       addToast(formData.msg , formData.type ,{
             className: 'custom-toast',
-            lifetime: 500000,
+           placement: 'top-center',
+        });
+        addToast(formData.msg , formData.type ,{
+            className: 'custom-toast',
         } );
-       setTimeout(() => {
-           updateToast({
-               id,
-                message: `
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                Updated message
-                `,
 
-           });
-       },10000)
+        addToast.success('Success Toast', {
+            placement: 'bottom-right',
+        });
     }
 
   return (<>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
           <label>
               Message:
               <input type="text" name="msg" value={formData.msg} onChange={handleInputChange}/>
@@ -72,7 +56,11 @@ const App: FunctionComponent = () => {
           </label>
           <br/>
           <button type="submit">Make A Toast</button>
-      </form>  </>);
+      </form>
+      <button onClick={()=>{removeToast.byIndex?.(0)}}>
+          Remove idx 0
+      </button>
+  </>);
 
 };
 

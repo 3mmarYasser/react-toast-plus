@@ -13,21 +13,20 @@ createRoot(document.getElementById('root')!).render(
             }}
             toastOptions={{
                 className: 'toast dgfdg',
-                lifetime:5000,
-                placement:"bottom-right",
+                autoClose: false,
+                draggable: false,
+                placement:"bottom-center",
                 style:{
                     background:"yellow",
                     color:"aqua"
                 },
                 successOptions:{
-                    lifetime:10000,
                     className: 'success-toast HideMe',
                     style:{
                         background:"green",
                     }
                 },
                 errorOptions:{
-                    lifetime:1000,
                     style:{
                         background:"red",
                     }
