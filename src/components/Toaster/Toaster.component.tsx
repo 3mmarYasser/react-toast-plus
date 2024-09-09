@@ -20,7 +20,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
                     clearInterval(interval);
                     onClose(id);
                 }
-            }, 100);
+            }, 10);
 
             return () => clearInterval(interval);
         }
