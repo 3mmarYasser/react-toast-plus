@@ -1,21 +1,22 @@
-import React, {FunctionComponent, useEffect} from 'react';
-import {ToastType, useToast, useToastStore} from "react-toast-plus";
+import React, { FunctionComponent, useEffect} from 'react';
+import {Placement, ToastType, useToast, useToastStore} from "react-toast-plus";
 
 
 interface FormData {
     msg: string;
     type: ToastType;
+    placement: Placement;
 }
 
 const App: FunctionComponent = () => {
-    const { addToast ,removeToast} = useToast();
+    const { addToast ,removeToast } = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
     },[toasts] )
 
 
-    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" });
+    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-left" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -26,15 +27,8 @@ const App: FunctionComponent = () => {
         event.preventDefault();
        addToast(formData.msg , formData.type ,{
             className: 'custom-toast',
-           placement: 'top-center',
-        });
-        addToast(formData.msg , formData.type ,{
-            className: 'custom-toast',
+            placement: formData.placement,
         } );
-
-        addToast.success('Success Toast', {
-            placement: 'bottom-right',
-        });
     }
 
   return (<>
@@ -52,6 +46,18 @@ const App: FunctionComponent = () => {
                     <option value="success">Success</option>
                     <option value="warning">Warning</option>
                     <option value="error">Error</option>
+              </select>
+          </label>
+          <br/>
+          <label>
+              Placement :
+              <select name={"placement"} onChange={handleInputChange}>
+                  <option value="top-left">Top Left</option>
+                  <option value="top-center">Top Center</option>
+                  <option value="top-right">Top Right</option>
+                  <option value="bottom-left">Bottom Left</option>
+                  <option value="bottom-center">Bottom Center</option>
+                  <option value="bottom-right">Bottom Right</option>
               </select>
           </label>
           <br/>

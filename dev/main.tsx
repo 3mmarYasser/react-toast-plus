@@ -1,8 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from "./App.tsx";
 import {ToastProvider} from "react-toast-plus";
-import {StrictMode} from "react";
-
+import {StrictMode } from "react";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -13,7 +12,8 @@ createRoot(document.getElementById('root')!).render(
             }}
             toastOptions={{
                 className: 'toast dgfdg',
-                autoClose: false,
+                autoClose: true,
+                lifetime: 3000,
                 draggable: false,
                 placement:"bottom-center",
                 style:{

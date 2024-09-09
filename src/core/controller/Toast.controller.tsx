@@ -3,6 +3,7 @@ import {useAutoClose} from "../hooks/useAutoClose.hook.ts";
 import {useToastHandlers} from "../hooks/useToastHandlers.hook.ts";
 import {Placement, ToastContextProps, ToastControllerProps} from "../../types/Toast.types.ts";
 import {useToast} from "../hooks/useToast.hook.ts";
+import {TOAST_PLACEMENT} from "../config/config.ts";
 
 
 const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter}) => {
@@ -10,14 +11,13 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   const {updateToastElement ,calcToastOffset}=useToastHandlers();
   const {updateToast}=useToast();
 
-  const {autoClose , lifetime} = toastContextProps.options||{};
+  const {autoClose , lifetime ,placement = TOAST_PLACEMENT} = toastContextProps.options||{};
 
-  const placement:Placement = toastContextProps.options?.placement || 'top-right';
   useEffect(() => {
     updateToast({
         id: toastContextProps.id,
       options:{
-          placement
+          placement:placement
       }
     });
   }, [placement]);
@@ -63,8 +63,8 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
           transform: `translateY(${offset * (placement.includes('top') ? 1 : -1) }px)`,
           position: 'absolute',
           transition: 'all 0.3s ease',
-        ...getPositionStyles(undefined),
-
+        ...getPositionStyles(placement),
+        ...getPlacementStyles(placement)
       }}>
         <Children {...toastContextProps} {...autoCloseProps} onClose={handleClose} />
       </div>
@@ -77,7 +77,7 @@ const getPositionStyles = (placement: Placement|undefined):React.CSSProperties =
       return { justifyContent: 'flex-start', left: 0 };
     case 'top-center':
     case 'bottom-center':
-      return { justifyContent: 'center', left: '50%', transform: 'translateX(-50%)' };
+      return { justifyContent: 'center', left:0, right:0};
     case 'top-right':
     case 'bottom-right':
       return { justifyContent: 'flex-end', right: 0 };
@@ -85,4 +85,19 @@ const getPositionStyles = (placement: Placement|undefined):React.CSSProperties =
       return { justifyContent: 'flex-end', right: 0 }; // Default to 'top-right'
   }
 };
+const getPlacementStyles = (placement: Placement|undefined):React.CSSProperties => {
+  switch (placement) {
+    case 'top-left':
+    case 'top-center':
+    case 'top-right':
+      return { top: 0 };
+    case 'bottom-left':
+    case 'bottom-center':
+    case 'bottom-right':
+    return { bottom: 0 };
+
+    default:
+      return { top: 0 };
+  }
+}
 export default ToastController;
