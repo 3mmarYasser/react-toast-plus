@@ -12,7 +12,7 @@ const App: FunctionComponent = () => {
     const { addToast ,removeToast } = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
-        console.log(     toasts);
+        console.log(toasts);
     },[toasts] )
 
 

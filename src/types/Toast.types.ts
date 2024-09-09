@@ -41,7 +41,7 @@ interface AutoCloseHandler {
 }
 
 interface ToastProps extends ToastContextProps, Partial<AutoCloseHandler>{
-
+    toastRef: React.RefObject<HTMLDivElement>;
 }
 interface State {
     toasts: ToastContextProps[];

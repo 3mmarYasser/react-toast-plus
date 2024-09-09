@@ -2,7 +2,7 @@ import {classNames} from "./classNames.helper.ts";
 import {ToastOptions} from "../types/Toast.types.ts";
 
 export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | undefined>):ToastOptions => {
-    console.log(...optionsArray);
+    // console.log(...optionsArray);
     const mergedOptions:Partial<ToastOptions> = {
         // Merge className from all options
         className: classNames(
@@ -40,6 +40,6 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
             style: Object.assign({}, ...optionsArray.map(option => option?.iconProps?.style)),
         },
     };
-    console.log("mergedOptions",mergedOptions);
+    // console.log("mergedOptions",mergedOptions);
     return  mergedOptions;
 };

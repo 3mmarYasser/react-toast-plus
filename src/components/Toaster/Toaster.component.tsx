@@ -1,13 +1,12 @@
 import {FunctionComponent, useEffect, useState} from 'react';
 import {ToastProps} from "../../types/Toast.types.ts";
 
-const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose ,type = 'info' ,options ={} ,remainingTime}) => {
+const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose ,type = 'info' ,options ={} ,toastRef ,remainingTime}) => {
     const {
         className ,
         style ,
         lifetime,
         autoClose
-
     } = options;
     const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
 
@@ -28,7 +27,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
 
     const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
   return (
-      <div className={className} style={{
+      <div ref={toastRef} className={className} style={{
           display: 'flex',
           background: "white",
           color: "black",
@@ -42,7 +41,6 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
       }}>
           <p>{message} {type} life time : {remaining}</p>
           <button onClick={() => {
-              // clear?.();
               onClose(id);
           }}>X</button>
           <div
