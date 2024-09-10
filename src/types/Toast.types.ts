@@ -10,7 +10,7 @@ interface ToastOptions {
     draggable?: boolean;
     progressClassName?: string;
     progressStyle?: React.CSSProperties;
-    transition?: React.ElementType;
+    transition?: ToastTransitionType;
     transitionDuration?: number;
     placement?: Placement;
     icon?: ReactNode;
@@ -100,15 +100,37 @@ interface ToastProviderProps{
     gutter?:number;
 }
 
+
 interface ToastControllerProps {
     children: React.ElementType<ToastProps>;
     toastContextProps:ToastContextProps;
     gutter:number;
 }
+ type ToastTransitionType =
+    | 'fade'
+    | 'zoom'
+    | 'slide'
+    | 'bounce'
+    | 'flip'
+    | 'rotate'
+    | 'scale'
+    | 'swirl';
+
+ type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
+ type TransitionStyles = {
+    [key in TransitionState]: React.CSSProperties;
+};
+
+ type TransitionsMap = {
+    [key in ToastTransitionType]: TransitionStyles;
+};
+
+type TransitionCustomTransitionStyle = Partial<Record<ToastTransitionType, React.CSSProperties["transition"]>>;
 
 export type
 {
     ToastContextProps ,ToastType,ToastOptions, ToastContextType  ,
     Action ,State , Dispatch , Placement ,ToastProviderProps ,
-    ToastContainerProps ,containerOptions ,AutoCloseHandler ,ToastProps , ToastControllerProps
+    ToastContainerProps ,containerOptions ,AutoCloseHandler ,ToastProps , ToastControllerProps,
+    ToastTransitionType, TransitionState ,TransitionStyles,TransitionsMap,TransitionCustomTransitionStyle
 } ;

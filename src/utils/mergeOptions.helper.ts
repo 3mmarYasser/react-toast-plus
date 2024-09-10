@@ -2,8 +2,8 @@ import {classNames} from "./classNames.helper.ts";
 import {ToastOptions} from "../types/Toast.types.ts";
 
 export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | undefined>):ToastOptions => {
-    // console.log(...optionsArray);
-    const mergedOptions:Partial<ToastOptions> = {
+    const reversedOptionsArray = [...optionsArray].reverse();
+    return  {
         // Merge className from all options
         className: classNames(
             ...optionsArray.map(option => option?.className).filter(Boolean)
@@ -13,11 +13,11 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
         style: Object.assign({}, ...optionsArray.map(option => option?.style)),
 
         // For these fields, use the last defined value
-        lifetime: optionsArray.reverse().find(option => option?.lifetime !== undefined)?.lifetime,
-        autoClose: optionsArray.find(option => option?.autoClose !== undefined)?.autoClose,
-        hideProgressBar: optionsArray.find(option => option?.hideProgressBar !== undefined)?.hideProgressBar,
-        pauseOnHover: optionsArray.find(option => option?.pauseOnHover !== undefined)?.pauseOnHover,
-        draggable: optionsArray.find(option => option?.draggable !== undefined)?.draggable,
+        lifetime: reversedOptionsArray.find(option => option?.lifetime !== undefined)?.lifetime,
+        autoClose: reversedOptionsArray.find(option => option?.autoClose !== undefined)?.autoClose,
+        hideProgressBar: reversedOptionsArray.find(option => option?.hideProgressBar !== undefined)?.hideProgressBar,
+        pauseOnHover: reversedOptionsArray.find(option => option?.pauseOnHover !== undefined)?.pauseOnHover,
+        draggable: reversedOptionsArray.find(option => option?.draggable !== undefined)?.draggable,
 
 
         // Similar logic for progress className and style
@@ -27,10 +27,10 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
         progressStyle: Object.assign({}, ...optionsArray.map(option => option?.progressStyle)),
 
         // For transition and other non-style properties, use the last defined value
-        transition: optionsArray.reverse().find(option => option?.transition !== undefined)?.transition,
-        transitionDuration: optionsArray.reverse().find(option => option?.transitionDuration !== undefined)?.transitionDuration,
-        placement: optionsArray.find(option => option?.placement !== undefined)?.placement,
-        icon: optionsArray.reverse().find(option => option?.icon !== undefined)?.icon,
+        transition: reversedOptionsArray.find(option => option?.transition !== undefined)?.transition,
+        transitionDuration: reversedOptionsArray.find(option => option?.transitionDuration !== undefined)?.transitionDuration,
+        placement: reversedOptionsArray.find(option => option?.placement !== undefined)?.placement,
+        icon: reversedOptionsArray.find(option => option?.icon !== undefined)?.icon,
 
         // Merge icon props (className and style)
         iconProps: {
@@ -40,6 +40,4 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
             style: Object.assign({}, ...optionsArray.map(option => option?.iconProps?.style)),
         },
     };
-    // console.log("mergedOptions",mergedOptions);
-    return  mergedOptions;
 };

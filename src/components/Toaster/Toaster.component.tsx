@@ -1,7 +1,7 @@
 import {FunctionComponent, useEffect, useState} from 'react';
 import {ToastProps} from "../../types/Toast.types.ts";
 
-const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose ,type = 'info' ,options ={} ,toastRef ,remainingTime}) => {
+const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose   ,options ={} ,toastRef ,remainingTime}) => {
     const {
         className ,
         style ,
@@ -39,8 +39,14 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
           borderRadius: "8px",
           ...style,
       }}>
-          <p>{message} {type} life time : {remaining}</p>
-          <button onClick={() => {
+          <p>{message}</p>
+          <button style={{
+              marginLeft: '100px',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              color: 'red',
+          }} onClick={() => {
               onClose(id);
           }}>X</button>
           <div

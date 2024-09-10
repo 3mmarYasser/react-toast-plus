@@ -1,22 +1,23 @@
 import React, { FunctionComponent, useEffect} from 'react';
-import {Placement, ToastType, useToast, useToastStore} from "react-toast-plus";
+import {Placement, ToastTransitionType, ToastType, useToast, useToastStore} from "react-toast-plus";
 
 
 interface FormData {
     msg: string;
     type: ToastType;
     placement: Placement;
+    transition: ToastTransitionType;
 }
 
 const App: FunctionComponent = () => {
     const { addToast ,removeToast } = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
-        console.log(toasts);
+        console.log(     toasts);
     },[toasts] )
 
 
-    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-left" });
+    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-left" ,transition:"fade" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -28,6 +29,9 @@ const App: FunctionComponent = () => {
        addToast(formData.msg , formData.type ,{
             className: 'custom-toast',
             placement: formData.placement,
+           transition: formData.transition,
+           autoClose: true,
+           lifetime: Math.floor(Math.random() * 20000),
         } );
     }
 
@@ -60,6 +64,20 @@ const App: FunctionComponent = () => {
                   <option value="bottom-right">Bottom Right</option>
               </select>
           </label>
+          <br/>
+          <label>
+                Transition :
+                <select name={"transition"} onChange={handleInputChange}>
+                    <option value="fade">Fade</option>
+                    <option value="slide">Slide</option>
+                    <option value="zoom">Zoom</option>
+                    <option value="bounce">Bounce</option>
+                    <option value="flip">Flip</option>
+                    <option value="rotate">Rotate</option>
+                    <option value="scale">Scale</option>
+                    <option value="swirl">Swirl</option>
+                </select>
+            </label>
           <br/>
           <button type="submit">Make A Toast</button>
       </form>

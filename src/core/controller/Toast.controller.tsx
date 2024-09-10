@@ -1,36 +1,46 @@
-import React, {FunctionComponent, useCallback, useEffect, useRef} from 'react';
+import {FunctionComponent, useCallback, useEffect, useRef, useState} from 'react';
 import {useAutoClose} from "../hooks/useAutoClose.hook.ts";
 import {useToastHandlers} from "../hooks/useToastHandlers.hook.ts";
-import {Placement, ToastContextProps, ToastControllerProps} from "../../types/Toast.types.ts";
+import {
+  ToastContextProps,
+  ToastControllerProps,
+  TransitionState
+} from "../../types/Toast.types.ts";
 import {useToast} from "../hooks/useToast.hook.ts";
-import {TOAST_PLACEMENT} from "../config/config.ts";
+import {TOAST_PLACEMENT, TOAST_TRANSITION, TOAST_TRANSITION_DURATION} from "../config/config.ts";
+import {getPositionStyles, getTransitionStyles} from "../../utils/styles.helper.ts";
 
-export type ToastTransitionType =
-    | 'fade'
-    | 'zoom'
-    | 'slide'
-    | 'bounce'
-    | 'flip'
-    | 'rotate'
-    | 'scale'
-    | 'swirl';
 
 const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter}) => {
+  const [state, setState] = useState<TransitionState>('entering');
+
   const autoCloseProps = useAutoClose(toastContextProps.id);
   const {updateToastElement ,calcToastOffset}=useToastHandlers();
   const {updateToast}=useToast();
+  const ToastRef = useRef<HTMLDivElement>(null);
 
-  const {autoClose , lifetime ,placement = TOAST_PLACEMENT , pauseOnHover} = toastContextProps.options||{};
-
+  const {autoClose , lifetime ,placement = TOAST_PLACEMENT , pauseOnHover ,transition =TOAST_TRANSITION , transitionDuration = TOAST_TRANSITION_DURATION} = toastContextProps.options||{};
 
   useEffect(() => {
     updateToast({
-        id: toastContextProps.id,
+      id: toastContextProps.id,
       options:{
-          placement:placement
+        placement:placement
       }
     });
   }, [placement]);
+
+  useEffect(() => {
+    if (state === 'entering') {
+       setState('entered')
+    } else if (state === 'exiting') {
+      setState('exited')
+    }
+  }, [state]);
+
+  useEffect(() => {
+    console.log('state', state);
+  }, [state]);
 
   const prevElementRefProps = useRef<Required<ToastContextProps["element"]>>({
     height: 0,
@@ -53,20 +63,31 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
 
   useEffect(() => {
     if (autoClose && lifetime) {
-      autoCloseProps.start(lifetime, toastContextProps.onClose);
+      autoCloseProps.start(lifetime, handleClose);
     }
   }, [autoClose, lifetime]);
 
   const handleClose:ToastContextProps['onClose'] = useCallback((id) => {
-    if (autoClose && autoCloseProps.isRunning()) {
+    if (autoClose  && autoCloseProps.remainingTime() > 0) {
       autoCloseProps.clear();
     }
-    toastContextProps.onClose(id);
-    }, [autoCloseProps, toastContextProps.onClose]);
+    setState('exiting');
+    setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
+    }, [autoClose, transitionDuration]);
 
   const offset = calcToastOffset(toastContextProps ,{gutter});
 
-  const ToastRef = useRef<HTMLDivElement>(null);
+  const newToastContextProps = {
+    ...toastContextProps,
+    options:{
+      ...toastContextProps.options,
+      style: {
+        ...toastContextProps.options?.style,
+        ...getTransitionStyles(state, transition,transitionDuration ,placement),
+      },
+    }
+  };
+
   return (
 
             <div ref={ref}
@@ -82,42 +103,10 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
                    position: 'absolute',
                    transition: 'all 0.3s ease, opacity 0.3s ease',
                    ...getPositionStyles(placement),
-                   ...getPlacementStyles(placement),
+                   [placement.includes('top') ? 'top' : 'bottom']: 0,
                  }}>
-
-              <Children  {...toastContextProps} {...autoCloseProps} onClose={handleClose} toastRef={ToastRef}/>
+                <Children  {...newToastContextProps} {...autoCloseProps} onClose={handleClose} toastRef={ToastRef}/>
             </div>
   );
 };
-
-const getPositionStyles = (placement: Placement | undefined): React.CSSProperties => {
-  switch (placement) {
-    case 'top-left':
-    case 'bottom-left':
-      return {justifyContent: 'flex-start', left: 0};
-    case 'top-center':
-    case 'bottom-center':
-      return {justifyContent: 'center', left: 0, right: 0};
-    case 'top-right':
-    case 'bottom-right':
-      return {justifyContent: 'flex-end', right: 0};
-    default:
-      return {justifyContent: 'flex-end', right: 0};
-  }
-};
-const getPlacementStyles = (placement: Placement | undefined): React.CSSProperties => {
-  switch (placement) {
-    case 'top-left':
-    case 'top-center':
-    case 'top-right':
-      return { top: 0 };
-    case 'bottom-left':
-    case 'bottom-center':
-    case 'bottom-right':
-    return { bottom: 0 };
-
-    default:
-      return { top: 0 };
-  }
-}
 export default ToastController;

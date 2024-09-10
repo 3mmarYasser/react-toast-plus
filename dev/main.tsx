@@ -11,8 +11,10 @@ createRoot(document.getElementById('root')!).render(
             }}
             toastOptions={{
                 className: 'toast dgfdg',
-                autoClose: false,
+                autoClose: true,
                 lifetime: 3000,
+                transition: 'zoom',
+                transitionDuration: 450,
                 draggable: false,
                 pauseOnHover: true,
                 placement:"bottom-center",
@@ -22,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
                 },
                 successOptions:{
                     className: 'success-toast HideMe',
+                    lifetime: 5000,
                     style:{
                         background:"green",
                     }
