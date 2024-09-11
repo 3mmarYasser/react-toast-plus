@@ -71,11 +71,6 @@ const App: FunctionComponent = () => {
                     <option value="fade">Fade</option>
                     <option value="slide">Slide</option>
                     <option value="zoom">Zoom</option>
-                    <option value="bounce">Bounce</option>
-                    <option value="flip">Flip</option>
-                    <option value="rotate">Rotate</option>
-                    <option value="scale">Scale</option>
-                    <option value="swirl">Swirl</option>
                 </select>
             </label>
           <br/>

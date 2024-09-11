@@ -21,7 +21,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "react-toast-plus": ["./dist/react-toast-plus.d.ts"]
+      "react-toast-plus": ["./src/index.ts"]
     }
   },
   "include": ["src" , "dev"]

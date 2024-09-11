@@ -9,7 +9,7 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     autoClose: true,
     hideProgressBar: false,
     pauseOnHover: false,
-    draggable: true,
+    // draggable: true,
     transitionDuration: TOAST_TRANSITION_DURATION,
     placement: TOAST_PLACEMENT,
     transition: TOAST_TRANSITION,

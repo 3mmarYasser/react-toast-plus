@@ -12,7 +12,7 @@ import {getPositionStyles, getTransitionStyles} from "../../utils/styles.helper.
 
 
 const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter}) => {
-  const [state, setState] = useState<TransitionState>('entering');
+  const [state, setState] = useState<TransitionState>('unmounted');
 
   const autoCloseProps = useAutoClose(toastContextProps.id);
   const {updateToastElement ,calcToastOffset}=useToastHandlers();
@@ -31,12 +31,17 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   }, [placement]);
 
   useEffect(() => {
-    if (state === 'entering') {
-       setState('entered')
-    } else if (state === 'exiting') {
-      setState('exited')
+    if (state === 'unmounted') {
+      setState('entering');
     }
-  }, [state]);
+    if (state === 'entering') {
+      const timeout = setTimeout(() => setState('entered'), transitionDuration);
+      return () => clearTimeout(timeout);
+    } else if (state === 'exiting') {
+      const timeout = setTimeout(() => setState('exited'), transitionDuration);
+      return () => clearTimeout(timeout);
+    }
+  }, [state, transitionDuration]);
 
   useEffect(() => {
     console.log('state', state);

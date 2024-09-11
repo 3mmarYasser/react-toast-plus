@@ -1,5 +1,29 @@
 import React, {ReactNode} from "react";
 
+type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
+
+type ToastTransitionType =
+    | 'fade'
+    | 'zoom'
+    | 'slide'
+
+type TransitionState = 'unmounted'|'entering' | 'entered' | 'exiting' | 'exited';
+
+type Placement =
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right'
+    | 'top-left'
+    | 'top-center'
+    | 'top-right';
+
+export enum ActionTypes {
+    ADD_TOAST = 'ADD_TOAST',
+    REMOVE_TOAST = 'REMOVE_TOAST',
+    UPDATE_TOAST = 'UPDATE_TOAST',
+    REMOVE_ALL_TOASTS = 'REMOVE_ALL_TOASTS',
+}
+
 interface ToastOptions {
     className?: string;
     style?: React.CSSProperties;
@@ -7,7 +31,7 @@ interface ToastOptions {
     autoClose?: boolean;
     hideProgressBar?: boolean;
     pauseOnHover?: boolean;
-    draggable?: boolean;
+    // draggableClose?: boolean;
     progressClassName?: string;
     progressStyle?: React.CSSProperties;
     transition?: ToastTransitionType;
@@ -19,7 +43,6 @@ interface ToastOptions {
         style?: React.CSSProperties;
     }
 }
-type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
 
 interface ToastContextProps{
     id: string;
@@ -46,12 +69,7 @@ interface ToastProps extends ToastContextProps, Partial<AutoCloseHandler>{
 interface State {
     toasts: ToastContextProps[];
 }
-export enum ActionTypes {
-    ADD_TOAST = 'ADD_TOAST',
-    REMOVE_TOAST = 'REMOVE_TOAST',
-    UPDATE_TOAST = 'UPDATE_TOAST',
-    REMOVE_ALL_TOASTS = 'REMOVE_ALL_TOASTS',
-}
+
 
 type Action =
     | { type: ActionTypes.ADD_TOAST; toast: ToastContextProps }
@@ -61,13 +79,7 @@ type Action =
 
 type Dispatch = React.Dispatch<Action>;
 
-type Placement =
-    | 'bottom-left'
-    | 'bottom-center'
-    | 'bottom-right'
-    | 'top-left'
-    | 'top-center'
-    | 'top-right';
+
 interface ToastContextType {
     state: State;
     dispatch: Dispatch;
@@ -106,17 +118,7 @@ interface ToastControllerProps {
     toastContextProps:ToastContextProps;
     gutter:number;
 }
- type ToastTransitionType =
-    | 'fade'
-    | 'zoom'
-    | 'slide'
-    | 'bounce'
-    | 'flip'
-    | 'rotate'
-    | 'scale'
-    | 'swirl';
 
- type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
  type TransitionStyles = {
     [key in TransitionState]: React.CSSProperties;
 };
@@ -124,13 +126,14 @@ interface ToastControllerProps {
  type TransitionsMap = {
     [key in ToastTransitionType]: TransitionStyles;
 };
-
-type TransitionCustomTransitionStyle = Partial<Record<ToastTransitionType, React.CSSProperties["transition"]>>;
+type DefaultTransitionsMap = {
+    [key in ToastTransitionType]:React.CSSProperties;
+}
 
 export type
 {
     ToastContextProps ,ToastType,ToastOptions, ToastContextType  ,
     Action ,State , Dispatch , Placement ,ToastProviderProps ,
     ToastContainerProps ,containerOptions ,AutoCloseHandler ,ToastProps , ToastControllerProps,
-    ToastTransitionType, TransitionState ,TransitionStyles,TransitionsMap,TransitionCustomTransitionStyle
+    ToastTransitionType, TransitionState ,TransitionStyles,TransitionsMap,DefaultTransitionsMap
 } ;
