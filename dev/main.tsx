@@ -6,9 +6,11 @@ createRoot(document.getElementById('root')!).render(
     <>
         <h1 style={{color:'red'}}>Live Test For Development Mode Only</h1>
         <ToastProvider
+            newestFirst={true}
             containerOptions={{
                 className: 'toast-container',
             }}
+
             toastOptions={{
                 className: 'toast dgfdg',
                 autoClose: true,
@@ -16,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
                 transition: 'zoom',
                 transitionDuration: 500,
                 pauseOnHover: true,
-                placement:"bottom-center",
+                draggableClose:true,
                 style:{
                     background:"yellow",
                     color:"aqua"

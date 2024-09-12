@@ -17,7 +17,7 @@ const App: FunctionComponent = () => {
     },[toasts] )
 
 
-    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-left" ,transition:"fade" });
+    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-right" ,transition:"slide" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -30,7 +30,6 @@ const App: FunctionComponent = () => {
             className: 'custom-toast',
             placement: formData.placement,
            transition: formData.transition,
-           autoClose: true,
            lifetime: Math.floor(Math.random() * 20000),
         } );
     }
@@ -56,29 +55,30 @@ const App: FunctionComponent = () => {
           <label>
               Placement :
               <select name={"placement"} onChange={handleInputChange}>
-                  <option value="top-left">Top Left</option>
-                  <option value="top-center">Top Center</option>
                   <option value="top-right">Top Right</option>
-                  <option value="bottom-left">Bottom Left</option>
-                  <option value="bottom-center">Bottom Center</option>
+                  <option value="top-center">Top Center</option>
+                  <option value="top-left">Top Left</option>
                   <option value="bottom-right">Bottom Right</option>
+                  <option value="bottom-center">Bottom Center</option>
+                  <option value="bottom-left">Bottom Left</option>
               </select>
           </label>
           <br/>
           <label>
-                Transition :
-                <select name={"transition"} onChange={handleInputChange}>
-                    <option value="fade">Fade</option>
-                    <option value="slide">Slide</option>
-                    <option value="zoom">Zoom</option>
-                </select>
-            </label>
+              Transition :
+              <select name={"transition"} onChange={handleInputChange}>
+                  <option value="slide">Slide</option>
+                  <option value="fade">Fade</option>
+                  <option value="zoom">Zoom</option>
+              </select>
+          </label>
           <br/>
           <button type="submit">Make A Toast</button>
       </form>
       <button onClick={()=>{removeToast.byIndex?.(0)}}>
           Remove idx 0
       </button>
+
   </>);
 
 };

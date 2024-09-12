@@ -11,7 +11,7 @@ import ToastController from "../../controller/Toast.controller.tsx";
 
 export const ToastContext = createContext<ToastContextType |undefined>(undefined);
 
-const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={} ,gutter = Gutter}) => {
+const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={} ,gutter = Gutter ,newestFirst}) => {
   const [state, dispatch] = useReducer(toastReducer,{
     toasts: []
   })
@@ -31,6 +31,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     info: infoOptions,
     empty: emptyOptions,
   };
+  // const orderedToasts = newestFirst ? [...state.toasts].reverse() : state.toasts;
 
   return (
       <ToastContext.Provider value={{state, dispatch}}>
@@ -47,7 +48,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
                       options                            // Toast-specific options
                   );
 
-                  return (<ToastController gutter={gutter}  key={toast.id}  toastContextProps={{...rest , options:mergedOptions}}>
+                  return (<ToastController gutter={gutter}  key={toast.id}  toastContextProps={{...rest , options:mergedOptions}} newestFirst={newestFirst}>
                     {ToastComponent}
                   </ToastController>)
                 })}

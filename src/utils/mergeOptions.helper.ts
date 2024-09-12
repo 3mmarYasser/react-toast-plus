@@ -17,8 +17,7 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
         autoClose: reversedOptionsArray.find(option => option?.autoClose !== undefined)?.autoClose,
         hideProgressBar: reversedOptionsArray.find(option => option?.hideProgressBar !== undefined)?.hideProgressBar,
         pauseOnHover: reversedOptionsArray.find(option => option?.pauseOnHover !== undefined)?.pauseOnHover,
-        // draggableClose: reversedOptionsArray.find(option => option?.draggableClose !== undefined)?.draggableClose,
-
+        draggableClose: reversedOptionsArray.find(option => option?.draggableClose !== undefined)?.draggableClose,
 
         // Similar logic for progress className and style
         progressClassName: classNames(

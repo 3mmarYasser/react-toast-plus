@@ -18,7 +18,7 @@ export const getTransitionStyles = (state: TransitionState, type: ToastTransitio
             transition: `all ${duration}ms  cubic-bezier(0.2, 0, 0, 1)`
         },
         slide:{
-            transition: `all ${duration}ms cubic-bezier(0.68, -0.55, 0.25, 1.35)`,
+            // transition: `all ${duration}ms cubic-bezier(0.68, -0.55, 0.25, 1.35)`,
 
         },
         zoom:{}

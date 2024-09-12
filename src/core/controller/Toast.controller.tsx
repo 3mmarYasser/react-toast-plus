@@ -7,20 +7,32 @@ import {
   TransitionState
 } from "../../types/Toast.types.ts";
 import {useToast} from "../hooks/useToast.hook.ts";
-import {TOAST_PLACEMENT, TOAST_TRANSITION, TOAST_TRANSITION_DURATION} from "../config/config.ts";
+import {NEWEST_FIRST, TOAST_PLACEMENT, TOAST_TRANSITION, TOAST_TRANSITION_DURATION} from "../config/config.ts";
 import {getPositionStyles, getTransitionStyles} from "../../utils/styles.helper.ts";
+import {useDraggableClose} from "../hooks/useDraggableClose.hook.ts";
 
 
-const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter}) => {
+const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter ,newestFirst =NEWEST_FIRST}) => {
   const [state, setState] = useState<TransitionState>('unmounted');
-
   const autoCloseProps = useAutoClose(toastContextProps.id);
   const {updateToastElement ,calcToastOffset}=useToastHandlers();
   const {updateToast}=useToast();
   const ToastRef = useRef<HTMLDivElement>(null);
 
-  const {autoClose , lifetime ,placement = TOAST_PLACEMENT , pauseOnHover ,transition =TOAST_TRANSITION , transitionDuration = TOAST_TRANSITION_DURATION} = toastContextProps.options||{};
 
+  const {autoClose , lifetime ,placement = TOAST_PLACEMENT  ,transition =TOAST_TRANSITION , transitionDuration = TOAST_TRANSITION_DURATION ,draggableClose ,pauseOnHover} = toastContextProps.options||{};
+
+  const {
+    dragDistance,
+    opacity,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd, isDragging
+  } = useDraggableClose(toastContextProps.id, toastContextProps.onClose, draggableClose);
+
+  useEffect(() => {
+    console.log('isDragging', isDragging);
+  }, [isDragging]);
   useEffect(() => {
     updateToast({
       id: toastContextProps.id,
@@ -80,7 +92,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
     }, [autoClose, transitionDuration]);
 
-  const offset = calcToastOffset(toastContextProps ,{gutter});
+  const offset = calcToastOffset(toastContextProps,{gutter ,newestFirst})
 
   const newToastContextProps = {
     ...toastContextProps,
@@ -96,17 +108,29 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   return (
 
             <div ref={ref}
+
                  {...pauseOnHover &&
                  {
                    onMouseEnter: autoCloseProps.pause,
                    onMouseLeave: autoCloseProps.resume,
                  }
                  }
+                 {...draggableClose && {
+                   onMouseDown:handleDragStart,
+                   onMouseMove:handleDragMove,
+                   onMouseUp:handleDragEnd,
+                   onTouchStart:handleDragStart,
+                   onTouchMove:handleDragMove,
+                   onTouchEnd:handleDragEnd
+                 }}
                  style={{
                    display: 'flex',
-                   transform: `translateY(${offset * (placement.includes('top') ? 1 : -1)}px)`,
+                   transform: `translateY(${offset * (placement.includes('top') ? 1 : -1)}px) translateX(${dragDistance}px)`,
                    position: 'absolute',
-                   transition: 'all 0.3s ease, opacity 0.3s ease',
+                   opacity: opacity,
+                   boxSizing: 'border-box',
+                   cursor: draggableClose ? 'pointer' : 'default',
+                   transition: isDragging ? 'none' : 'all 300ms ease',
                    ...getPositionStyles(placement),
                    [placement.includes('top') ? 'top' : 'bottom']: 0,
                  }}>

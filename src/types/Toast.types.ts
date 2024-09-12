@@ -5,7 +5,7 @@ type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
 type ToastTransitionType =
     | 'fade'
     | 'zoom'
-    | 'slide'
+    | 'slide';
 
 type TransitionState = 'unmounted'|'entering' | 'entered' | 'exiting' | 'exited';
 
@@ -31,7 +31,7 @@ interface ToastOptions {
     autoClose?: boolean;
     hideProgressBar?: boolean;
     pauseOnHover?: boolean;
-    // draggableClose?: boolean;
+    draggableClose?: boolean;
     progressClassName?: string;
     progressStyle?: React.CSSProperties;
     transition?: ToastTransitionType;
@@ -105,7 +105,6 @@ interface MainToastOptions extends  ToastOptions{
 
 interface ToastProviderProps{
     children: ReactNode;
-    placement?:Placement;
     newestFirst?:boolean;
     containerOptions?:containerOptions;
     toastOptions?:MainToastOptions;
@@ -117,6 +116,7 @@ interface ToastControllerProps {
     children: React.ElementType<ToastProps>;
     toastContextProps:ToastContextProps;
     gutter:number;
+    newestFirst?:boolean;
 }
 
  type TransitionStyles = {
