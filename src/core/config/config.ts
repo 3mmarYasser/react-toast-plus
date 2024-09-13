@@ -8,8 +8,15 @@ export const NEWEST_FIRST = true;
 export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     lifetime: TOAST_LIFETIME,
     autoClose: true,
-    hideProgressBar: false,
-    pauseOnHover: false,
+    progressBar: {
+        visible: true,
+    },
+    closeButton:{
+        visible: true,
+    },
+    pauseOnHover: true,
+    pauseOnFocusLoss: true,
+    closeOnClick: false,
     draggableClose: true,
     transitionDuration: TOAST_TRANSITION_DURATION,
     placement: TOAST_PLACEMENT,

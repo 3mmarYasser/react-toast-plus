@@ -17,11 +17,12 @@ export const getTransitionStyles = (state: TransitionState, type: ToastTransitio
         fade:{
             transition: `all ${duration}ms  cubic-bezier(0.2, 0, 0, 1)`
         },
-        slide:{
-            // transition: `all ${duration}ms cubic-bezier(0.68, -0.55, 0.25, 1.35)`,
+        slide:{},
+        zoom:{},
+        bounce:{
+            transition: `all ${duration}ms cubic-bezier(0.68, -0.55, 0.25, 1.35)`,
 
-        },
-        zoom:{}
+        }
     };
 
     const transitions: TransitionsMap = {
@@ -45,6 +46,13 @@ export const getTransitionStyles = (state: TransitionState, type: ToastTransitio
             entered: { transform: 'translateX(0)',opacity: 1},
             exiting: { transform: `translateX(${right * (center?50:100)}%)`,opacity: center?0:1},
             exited: { transform: `translateX(${right * (center?50:100)}%)` ,opacity: center?0:1},
+        },
+        bounce:{
+            unmounted: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
+            entering: { transform: 'translate3d(0, 0, 0) scale(1)' },
+            entered: { transform: 'translate3d(0, 0, 0) scale(1)' },
+            exiting: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
+            exited: {  transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
         }
 
     };

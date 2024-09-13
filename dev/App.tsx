@@ -68,6 +68,7 @@ const App: FunctionComponent = () => {
               Transition :
               <select name={"transition"} onChange={handleInputChange}>
                   <option value="slide">Slide</option>
+                  <option value="bounce">Bounce</option>
                   <option value="fade">Fade</option>
                   <option value="zoom">Zoom</option>
               </select>

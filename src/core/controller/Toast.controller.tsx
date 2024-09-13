@@ -20,7 +20,9 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   const ToastRef = useRef<HTMLDivElement>(null);
 
 
-  const {autoClose , lifetime ,placement = TOAST_PLACEMENT  ,transition =TOAST_TRANSITION , transitionDuration = TOAST_TRANSITION_DURATION ,draggableClose ,pauseOnHover} = toastContextProps.options||{};
+  const {autoClose , lifetime ,placement = TOAST_PLACEMENT  ,
+    transition =TOAST_TRANSITION , transitionDuration = TOAST_TRANSITION_DURATION ,
+    draggableClose ,pauseOnHover ,pauseOnFocusLoss ,closeOnClick} = toastContextProps.options||{};
 
   const {
     dragDistance,
@@ -30,9 +32,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     handleDragEnd, isDragging
   } = useDraggableClose(toastContextProps.id, toastContextProps.onClose, draggableClose);
 
-  useEffect(() => {
-    console.log('isDragging', isDragging);
-  }, [isDragging]);
+
   useEffect(() => {
     updateToast({
       id: toastContextProps.id,
@@ -56,8 +56,19 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   }, [state, transitionDuration]);
 
   useEffect(() => {
-    console.log('state', state);
-  }, [state]);
+    if (pauseOnFocusLoss) {
+      const handleWindowBlur = () => autoCloseProps.pause();
+      const handleWindowFocus = () => autoCloseProps.resume();
+      window.addEventListener('blur', handleWindowBlur);
+      window.addEventListener('focus', handleWindowFocus);
+
+      return () => {
+        window.removeEventListener('blur', handleWindowBlur);
+        window.removeEventListener('focus', handleWindowFocus);
+      };
+    }
+  }, [pauseOnFocusLoss]);
+
 
   const prevElementRefProps = useRef<Required<ToastContextProps["element"]>>({
     height: 0,
@@ -122,6 +133,9 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
                    onTouchStart:handleDragStart,
                    onTouchMove:handleDragMove,
                    onTouchEnd:handleDragEnd
+                 }}
+                 {...closeOnClick && {
+                   onClick: () => handleClose(toastContextProps.id),
                  }}
                  style={{
                    display: 'flex',

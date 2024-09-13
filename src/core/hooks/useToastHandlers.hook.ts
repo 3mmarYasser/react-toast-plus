@@ -9,10 +9,20 @@ export const useToastHandlers = () => {
         dispatch({ type: ActionTypes.UPDATE_TOAST, toast: { id, element } });
     }
 
-    const calcToastOffset = useCallback((toast:ToastContextProps ,opts:{gutter:number,newestFirst:boolean}):number=>{
+        const calcToastOffset = useCallback((toast:ToastContextProps ,opts:{gutter:number,newestFirst:boolean}):number=>{
+        const bottom = toast.options?.placement?.includes("bottom");
         const filledToasts = toasts.filter(t=>t.options?.placement === toast.options?.placement);
         const index = filledToasts.findIndex(t=>t.id === toast.id);
-        return filledToasts.slice(...(opts.newestFirst ?[0,index]:[index+1])).reduce((acc, t) => {
+
+            const sliceRange = bottom
+                ? opts.newestFirst
+                    ? [index + 1]
+                    : [0, index]
+                : opts.newestFirst
+                    ? [0, index]
+                    : [index + 1];
+
+        return filledToasts.slice(...(sliceRange)).reduce((acc, t) => {
             const height = t.element?.height ?? 0;
             return acc +opts.gutter + height;
         }, 0);

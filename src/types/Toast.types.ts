@@ -5,7 +5,8 @@ type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
 type ToastTransitionType =
     | 'fade'
     | 'zoom'
-    | 'slide';
+    | 'slide'
+    | 'bounce';
 
 type TransitionState = 'unmounted'|'entering' | 'entered' | 'exiting' | 'exited';
 
@@ -25,22 +26,32 @@ export enum ActionTypes {
 }
 
 interface ToastOptions {
-    className?: string;
-    style?: React.CSSProperties;
-    lifetime?: number;
-    autoClose?: boolean;
-    hideProgressBar?: boolean;
-    pauseOnHover?: boolean;
-    draggableClose?: boolean;
-    progressClassName?: string;
-    progressStyle?: React.CSSProperties;
-    transition?: ToastTransitionType;
-    transitionDuration?: number;
-    placement?: Placement;
-    icon?: ReactNode;
+    className?: string;//✔
+    style?: React.CSSProperties//✔
+    lifetime?: number;//✔
+    autoClose?: boolean;//✔
+    pauseOnHover?: boolean;//✔
+    pauseOnFocusLoss?: boolean;//✔
+    draggableClose?: boolean;//✔
+    closeOnClick?: boolean;//✔
+
+    closeButton?: {
+        visible?: boolean;//
+        className?: string;//
+        style?: React.CSSProperties;//
+    };
+    progressBar?:{
+        visible?: boolean;//
+        className?: string;//
+        style?: React.CSSProperties;//
+    }
+    transition?: ToastTransitionType;//✔
+    transitionDuration?: number;//✔
+    placement?: Placement;//✔
+    icon?: ReactNode;//
     iconProps?: {
-        className?: string;
-        style?: React.CSSProperties;
+        className?: string;//
+        style?: React.CSSProperties;//
     }
 }
 
