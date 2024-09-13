@@ -18,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
                 transition: 'zoom',
                 transitionDuration: 500,
                 pauseOnHover: true,
+                closeOnClick: true,
                 draggableClose:true,
                 style:{
                     background:"yellow",

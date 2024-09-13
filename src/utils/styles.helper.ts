@@ -48,11 +48,11 @@ export const getTransitionStyles = (state: TransitionState, type: ToastTransitio
             exited: { transform: `translateX(${right * (center?50:100)}%)` ,opacity: center?0:1},
         },
         bounce:{
-            unmounted: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
-            entering: { transform: 'translate3d(0, 0, 0) scale(1)' },
-            entered: { transform: 'translate3d(0, 0, 0) scale(1)' },
-            exiting: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
-            exited: {  transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.4)`},
+            unmounted: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.8)`, opacity: center?0:1},
+            entering: { transform: 'translate3d(0, 0, 0) scale(1)' ,opacity: 1},
+            entered: { transform: 'translate3d(0, 0, 0) scale(1)' ,opacity: 1},
+            exiting: { transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.8)`,opacity: center?0:1},
+            exited: {  transform: `translate3d(${center?`0 , ${bottom *50}%`:`${right * 100}% , 0`}, 0) scale(0.8)`,opacity: center?0:1},
         }
 
     };
