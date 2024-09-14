@@ -13,8 +13,7 @@
     ".": {
       "import": "./dist/react-toast-plus.js",
       "require": "./dist/react-toast-plus.umd.cjs"
-    },
-    "./dist/style.css": "./dist/style.css"
+    }
   },
   "sideEffects": false,
   "scripts": {
@@ -45,5 +44,8 @@
     "vite-plugin-dts": "^4.1.0",
     "vite-plugin-lib-inject-css": "^2.1.1",
     "vite-tsconfig-paths": "^5.0.1"
+  },
+  "dependencies": {
+    "goober": "^2.1.14"
   }
 }

@@ -1,4 +1,4 @@
-import {Placement, ToastOptions, ToastTransitionType} from "../../types/Toast.types.ts";
+import {Placement, ToastOptions, ToastStylesProps, ToastTransitionType} from "../../types/Toast.types.ts";
 
 export const TOAST_LIFETIME:ToastOptions['lifetime'] = 5000;
 export const TOAST_PLACEMENT:Placement = 'top-right';
@@ -23,3 +23,18 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     transition: TOAST_TRANSITION,
 }
 export const Gutter = 6;
+
+export const DEFAULT_TOAST_STYLES:ToastStylesProps = {
+    toastWidth: "320px",
+    toastMinHeight: "48px",
+    toastFontFamily: "sans-serif",
+    toastBgColor: "white",
+    toastTextColor: "white",
+    toastSuccessIconColor: "green",
+    toastInfoIconColor: "blue",
+    toastWarningIconColor: "yellow",
+    toastErrorIconColor: "red",
+    toastLoadingIconColor: "gray",
+    toastRadius: "8px",
+    toastZIndex: "999"
+}

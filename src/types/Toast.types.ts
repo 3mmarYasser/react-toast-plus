@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
 
-type ToastType = 'success' | 'error' | 'warning' | 'info' |'empty';
+type ToastType = 'success' | 'error' | 'warning' | 'info' | 'empty'| 'loading';
 
 type ToastTransitionType =
     | 'fade'
@@ -71,11 +71,11 @@ interface AutoCloseHandler {
     resume: () => void;
     clear: () => void;
     remainingTime: () => number;
-    isRunning: () => boolean;
+    isRunning:boolean;
+    isPaused:boolean;
 }
 
 interface ToastProps extends ToastContextProps, Partial<AutoCloseHandler>{
-    toastRef: React.RefObject<HTMLDivElement>;
 }
 interface State {
     toasts: ToastContextProps[];
@@ -120,6 +120,7 @@ interface ToastProviderProps{
     containerOptions?:containerOptions;
     toastOptions?:MainToastOptions;
     gutter?:number;
+    toastStyles?:Partial<ToastStylesProps>;
 }
 
 
@@ -140,11 +141,25 @@ interface ToastControllerProps {
 type DefaultTransitionsMap = {
     [key in ToastTransitionType]:React.CSSProperties;
 }
-
+interface ToastStylesProps {
+    toastWidth: string;
+    toastMinHeight: string;
+    toastFontFamily: string;
+    toastBgColor: string;
+    toastTextColor: string;
+    toastSuccessIconColor: string;
+    toastInfoIconColor: string;
+    toastWarningIconColor: string;
+    toastErrorIconColor: string;
+    toastLoadingIconColor: string;
+    toastRadius: string;
+    toastZIndex: string;
+}
 export type
 {
     ToastContextProps ,ToastType,ToastOptions, ToastContextType  ,
     Action ,State , Dispatch , Placement ,ToastProviderProps ,
     ToastContainerProps ,containerOptions ,AutoCloseHandler ,ToastProps , ToastControllerProps,
-    ToastTransitionType, TransitionState ,TransitionStyles,TransitionsMap,DefaultTransitionsMap
+    ToastTransitionType, TransitionState ,TransitionStyles,TransitionsMap,DefaultTransitionsMap,
+    ToastStylesProps
 } ;

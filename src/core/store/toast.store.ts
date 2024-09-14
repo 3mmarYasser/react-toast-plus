@@ -24,6 +24,14 @@ export const toastReducer = (state:State , action:Action) :State=>{
                         options: {
                             ...toast.options,
                             ...action.toast.options,
+                            closeButton:{
+                                ...toast.options?.closeButton,
+                                ...action.toast.options?.closeButton,
+                            },
+                            progressBar:{
+                                ...toast.options?.progressBar,
+                                ...action.toast.options?.progressBar,
+                            },
                             iconProps: {
                                 ...toast.options?.iconProps,
                                 ...action.toast.options?.iconProps,}

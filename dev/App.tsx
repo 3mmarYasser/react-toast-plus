@@ -31,6 +31,7 @@ const App: FunctionComponent = () => {
             placement: formData.placement,
            transition: formData.transition,
            lifetime: Math.floor(Math.random() * 20000),
+
         } );
     }
 
@@ -76,7 +77,9 @@ const App: FunctionComponent = () => {
           <br/>
           <button type="submit">Make A Toast</button>
       </form>
-      <button onClick={()=>{removeToast.byIndex?.(0)}}>
+      <button onClick={()=>{
+          removeToast.byIndex?.(0);
+      }}>
           Remove idx 0
       </button>
 

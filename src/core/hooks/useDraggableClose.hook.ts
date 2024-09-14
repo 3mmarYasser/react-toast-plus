@@ -7,6 +7,7 @@ export const useDraggableClose =(id:ToastContextProps['id'] , onClose:ToastConte
     const [opacity, setOpacity] = useState(1);
     const startX = useRef(0);
     const velocityRef = useRef<number>(0);
+    const wasDraggedRef = useRef(false); // Track if the toast was dragged
 
 
     const handleDragMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
@@ -22,12 +23,17 @@ export const useDraggableClose =(id:ToastContextProps['id'] , onClose:ToastConte
             const opacityFactor = Math.max(1 - Math.abs(distance) / 150, 0);
             setOpacity(opacityFactor);
         });
+
+        if (Math.abs(distance) > 10) {
+            wasDraggedRef.current = true; // Considered a drag if distance > 10px
+        }
     },[isDragging, dragDistance]);
 
     const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
         setIsDragging(true);
         startX.current = 'touches' in e ? e.touches[0].clientX : e.clientX;
         velocityRef.current = 0;
+        wasDraggedRef.current = false;
 
     };
 
@@ -66,5 +72,7 @@ export const useDraggableClose =(id:ToastContextProps['id'] , onClose:ToastConte
         handleDragMove,
         handleDragEnd,
         isDragging,
+        wasDragged: wasDraggedRef.current, // Return if toast was dragged
+
     };
 }

@@ -10,14 +10,14 @@ import {useToast} from "../hooks/useToast.hook.ts";
 import {NEWEST_FIRST, TOAST_PLACEMENT, TOAST_TRANSITION, TOAST_TRANSITION_DURATION} from "../config/config.ts";
 import {getPositionStyles, getTransitionStyles} from "../../utils/styles.helper.ts";
 import {useDraggableClose} from "../hooks/useDraggableClose.hook.ts";
+import {toastControllerClass} from "../../styles";
 
 
 const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter ,newestFirst =NEWEST_FIRST}) => {
   const [state, setState] = useState<TransitionState>('unmounted');
-  const autoCloseProps = useAutoClose(toastContextProps.id);
-  const {updateToastElement ,calcToastOffset}=useToastHandlers();
   const {updateToast}=useToast();
-  const ToastRef = useRef<HTMLDivElement>(null);
+  const {updateToastElement ,calcToastOffset}=useToastHandlers();
+  const autoCloseProps = useAutoClose(toastContextProps.id);
 
 
   const {autoClose , lifetime ,placement = TOAST_PLACEMENT  ,
@@ -29,7 +29,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     opacity,
     handleDragStart,
     handleDragMove,
-    handleDragEnd, isDragging
+    handleDragEnd, isDragging,wasDragged
   } = useDraggableClose(toastContextProps.id, toastContextProps.onClose, draggableClose);
 
 
@@ -103,6 +103,11 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
     }, [autoClose, transitionDuration]);
 
+  const handelCloseOnClick = useCallback(() => {
+    if (!wasDragged) {
+      handleClose(toastContextProps.id)
+    }},[wasDragged]);
+
   const offset = calcToastOffset(toastContextProps,{gutter ,newestFirst})
 
   const newToastContextProps = {
@@ -119,7 +124,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   return (
 
             <div ref={ref}
-
+                 className={toastControllerClass}
                  {...pauseOnHover &&
                  {
                    onMouseEnter: autoCloseProps.pause,
@@ -135,20 +140,17 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
                    onTouchEnd:handleDragEnd
                  }}
                  {...closeOnClick && {
-                   onClick: () => handleClose(toastContextProps.id),
+                   onClick: handelCloseOnClick
                  }}
                  style={{
-                   display: 'flex',
                    transform: `translateY(${offset * (placement.includes('top') ? 1 : -1)}px) translateX(${dragDistance}px)`,
-                   position: 'absolute',
                    opacity: opacity,
-                   boxSizing: 'border-box',
                    cursor: draggableClose ? 'pointer' : 'default',
                    transition: isDragging ? 'none' : 'all 300ms ease',
                    ...getPositionStyles(placement),
                    [placement.includes('top') ? 'top' : 'bottom']: 0,
                  }}>
-                <Children  {...newToastContextProps} {...autoCloseProps} onClose={handleClose} toastRef={ToastRef}/>
+                <Children  {...newToastContextProps} {...autoCloseProps} onClose={handleClose}/>
             </div>
   );
 };

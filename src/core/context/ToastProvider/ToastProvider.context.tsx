@@ -1,4 +1,4 @@
-import {FunctionComponent, createContext, useReducer} from 'react';
+import {FunctionComponent, createContext, useReducer, useEffect} from 'react';
 import {ToastContextType, ToastOptions, ToastProviderProps, ToastType} from "../../../types/Toast.types.ts";
 import ToastContainer from "../../../components/ToastContainer/ToastContainer.component.tsx";
 import {createPortal} from "react-dom";
@@ -7,11 +7,12 @@ import Toaster from "../../../components/Toaster/Toaster.component.tsx";
 import {Gutter, TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
 import {mergeOptions} from "../../../utils/mergeOptions.helper.ts";
 import ToastController from "../../controller/Toast.controller.tsx";
-
+import {GlobalStyles} from "../../../styles";
 
 export const ToastContext = createContext<ToastContextType |undefined>(undefined);
 
-const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={} ,gutter = Gutter ,newestFirst}) => {
+
+const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,containerOptions ={} ,toastOptions={} ,gutter = Gutter ,newestFirst ,toastStyles}) => {
   const [state, dispatch] = useReducer(toastReducer,{
     toasts: []
   })
@@ -30,9 +31,12 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     warning: warningOptions,
     info: infoOptions,
     empty: emptyOptions,
+    loading:{}
   };
-  // const orderedToasts = newestFirst ? [...state.toasts].reverse() : state.toasts;
 
+  useEffect(() => {
+    GlobalStyles(toastStyles);
+  }, [toastStyles]);
   return (
       <ToastContext.Provider value={{state, dispatch}}>
         {children}

@@ -16,7 +16,7 @@ export default defineConfig({
       entry: resolve(__dirname , 'src/index.ts'),
       name:'react-toast-plus',
       fileName:'react-toast-plus',
-      formats:['es']
+      // formats:['es']
     },
     rollupOptions: {
       external: ['react', 'react-dom' , 'react/jsx-runtime'],

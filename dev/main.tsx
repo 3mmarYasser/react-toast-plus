@@ -12,40 +12,14 @@ createRoot(document.getElementById('root')!).render(
             }}
 
             toastOptions={{
-                className: 'toast dgfdg',
-                autoClose: true,
+                className: 'toast',
+                autoClose: false,
                 lifetime: 3000,
                 transition: 'zoom',
                 transitionDuration: 500,
                 pauseOnHover: true,
                 closeOnClick: true,
                 draggableClose:true,
-                style:{
-                    background:"yellow",
-                    color:"aqua"
-                },
-                successOptions:{
-                    className: 'success-toast HideMe',
-                    lifetime: 5000,
-                    style:{
-                        background:"green",
-                    }
-                },
-                errorOptions:{
-                    style:{
-                        background:"red",
-                    }
-                },
-                warningOptions:{
-                    style:{
-                        background:"orange",
-                    }
-                },
-                infoOptions:{
-                    style:{
-                        background:"blue",
-                    }
-                }
             }}
         >
             <h1>Hello From toast Provider</h1>
