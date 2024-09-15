@@ -32,15 +32,20 @@ export const useToast = () => {
     addToast.promise = <T>(promiseOrFunction: Promise<T> | (() => Promise<T>),
                         messages: { pending: string, success: string, error: string },
                         options?: ToastOptions) => {
-        const id = addToast(messages.pending, 'loading', options).id;
+        const id = addToast(messages.pending, 'loading', {
+            ...options,
+            autoClose: false,
+            pauseOnHover: false,
+            pauseOnFocusLoss: false,
+        }).id;
 
         const promise = typeof promiseOrFunction === 'function' ? promiseOrFunction() : promiseOrFunction;
         promise
             .then(() => {
-                updateToast({ id, message: messages.success, type: 'success' });
+                updateToast({ id, message: messages.success, type: 'success',options });
             })
             .catch(() => {
-                updateToast({ id, message: messages.error, type: 'error' });
+                updateToast({ id, message: messages.error, type: 'error',options });
             });
 
         return {

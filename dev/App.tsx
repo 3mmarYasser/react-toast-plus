@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect} from 'react';
-import {Placement, ToastTransitionType, ToastType, useToast, useToastStore} from "react-toast-plus";
+import {Placement, ToastContextProps, ToastTransitionType, ToastType, useToast, useToastStore} from "react-toast-plus";
 
 
 interface FormData {
@@ -8,7 +8,16 @@ interface FormData {
     placement: Placement;
     transition: ToastTransitionType;
 }
-
+const CustomToast:ToastContextProps["renderCustomToast"] = ({options ,isPaused}) => {
+    const {style ,className ,} = options ||{};
+    return (
+        <div className={className} style={style}>
+            <h1>Custom Toast</h1>
+            <p>This is a custom toast</p>
+            {isPaused && <p>Paused</p>}
+        </div>
+    );
+}
 const App: FunctionComponent = () => {
     const { addToast} = useToast();
     const {toasts} = useToastStore();
@@ -47,19 +56,14 @@ const App: FunctionComponent = () => {
                 }, 1000);
             });
         };
-        addToast.promise(someAsyncFunction ,{pending:"Pending" ,success:"Success" ,error:"Error"})
+        addToast.promise(someAsyncFunction ,{pending:"Pending" ,success:"Success" ,error:"Error"} ,{
+            autoClose:true,
+            pauseOnHover:true,
+            pauseOnFocusLoss:true,
+        })
     }
 const addCustomToast = () => {
-    addToast.custom(({options ,isPaused}) => {
-        const {style ,className ,} = options ||{};
-        return (
-            <div className={className} style={style}>
-                <h1>Custom Toast</h1>
-                <p>This is a custom toast</p>
-                {isPaused && <p>Paused</p>}
-            </div>
-        );
-    },{placement:"top-center" ,transition:"slide" ,lifetime:5000 ,autoClose:true});
+    addToast.custom(CustomToast,{placement:"top-center" ,transition:"slide" ,lifetime:5000 ,autoClose:true});
 }
   return (<>
       <form onSubmit={handleSubmit} >

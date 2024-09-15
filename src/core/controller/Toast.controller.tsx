@@ -17,7 +17,6 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   const [state, setState] = useState<TransitionState>('unmounted');
   const {updateToast}=useToast();
   const {updateToastElement ,calcToastOffset}=useToastHandlers();
-  const autoCloseProps = useAutoClose(toastContextProps.id);
 
 
   const {autoClose , lifetime ,placement = TOAST_PLACEMENT  ,
@@ -31,6 +30,15 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     handleDragMove,
     handleDragEnd, isDragging,wasDragged
   } = useDraggableClose(toastContextProps.id, toastContextProps.onClose, draggableClose);
+
+  const handleClose:ToastContextProps['onClose'] = useCallback((id) => {
+    setState('exiting');
+    setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
+  }, [transitionDuration]);
+
+  const autoCloseProps = useAutoClose(toastContextProps.id ,handleClose);
+
+
 
 
   useEffect(() => {
@@ -91,17 +99,15 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
 
   useEffect(() => {
     if (autoClose && lifetime) {
-      autoCloseProps.start(lifetime, handleClose);
+      autoCloseProps.start(lifetime);
+      return () => {
+        autoCloseProps.clear();
+      };
     }
+
   }, [autoClose, lifetime]);
 
-  const handleClose:ToastContextProps['onClose'] = useCallback((id) => {
-    if (autoClose  && autoCloseProps.remainingTime() > 0) {
-      autoCloseProps.clear();
-    }
-    setState('exiting');
-    setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
-    }, [autoClose, transitionDuration]);
+
 
   const handelCloseOnClick = useCallback(() => {
     if (!wasDragged) {

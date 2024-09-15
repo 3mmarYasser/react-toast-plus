@@ -67,7 +67,7 @@ interface ToastContextProps{
     renderCustomToast?: ((props: ToastProps) => ReactNode);
 }
 interface AutoCloseHandler {
-    start: (duration: number, onEnd: ToastContextProps["onClose"]) => void;
+    start: (duration: number) => void;
     pause: () => void;
     resume: () => void;
     clear: () => void;

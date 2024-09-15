@@ -1,14 +1,14 @@
 import {useCallback, useRef, useState} from 'react';
-import { AutoCloseHandler, ToastProps } from '../../types/Toast.types.ts';
+import {AutoCloseHandler, ToastContextProps, ToastProps} from '../../types/Toast.types.ts';
 
-export const useAutoClose = (id: ToastProps["id"]): AutoCloseHandler => {
+export const useAutoClose = (id: ToastProps["id"] ,onEnd: ToastContextProps["onClose"]): AutoCloseHandler => {
     const [endTime, setEndTime] = useState<number | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [isPaused, setIsPaused] = useState<boolean>(false);
     const [remaining, setRemaining] = useState<number>(0);
     const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
-    const start: AutoCloseHandler["start"] = useCallback((duration, onEnd) => {
+    const start: AutoCloseHandler["start"] = useCallback((duration) => {
         if (!id) return;
 
         const newEndTime = Date.now() + duration;
@@ -44,7 +44,7 @@ export const useAutoClose = (id: ToastProps["id"]): AutoCloseHandler => {
         }
     }, [isRunning, endTime]);
 
-    const resume = useCallback(() => {
+    const resume: AutoCloseHandler["resume"] = useCallback(() => {
         if (!isRunning && isPaused && remaining > 0) {
             const newEndTime = Date.now() + remaining;
             setEndTime(newEndTime);
@@ -53,6 +53,9 @@ export const useAutoClose = (id: ToastProps["id"]): AutoCloseHandler => {
             timeoutIdRef.current = setTimeout(() => {
                 setIsRunning(false);
                 setRemaining(0);
+                if (id) {
+                    onEnd(id);
+                }
             }, remaining);
         }
     }, [isRunning, isPaused, remaining]);

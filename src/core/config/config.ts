@@ -29,7 +29,7 @@ export const DEFAULT_TOAST_STYLES:ToastStylesProps = {
     toastMinHeight: "48px",
     toastFontFamily: "sans-serif",
     toastBgColor: "white",
-    toastTextColor: "white",
+    toastTextColor: "black",
     toastSuccessIconColor: "green",
     toastInfoIconColor: "blue",
     toastWarningIconColor: "yellow",

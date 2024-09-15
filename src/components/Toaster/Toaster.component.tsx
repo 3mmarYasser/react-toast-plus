@@ -10,17 +10,18 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
         autoClose
     } = options;
     const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
-
+    // useEffect(() => {
+    //     console.log(remaining);
+    // }, [remaining]);
     useEffect(() => {
         if(remainingTime &&autoClose){
             const interval = setInterval(() => {
                 const timeLeft = remainingTime();
+                // console.log(remainingTime());
                 setRemaining(timeLeft);
                 if (timeLeft <= 0) {
                     clearInterval(interval);
-                    onClose(id);
                 }
-                // console.log(id, timeLeft);
             }, 100);
 
             return () => clearInterval(interval);
