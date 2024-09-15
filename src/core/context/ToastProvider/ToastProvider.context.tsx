@@ -23,6 +23,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     warningOptions={},
     infoOptions={},
     emptyOptions={},
+      loadingOptions={},
     ...defaultOpts } = toastOptions;
 
   const typeOptionsMap:Record<ToastType, object> = {
@@ -31,7 +32,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     warning: warningOptions,
     info: infoOptions,
     empty: emptyOptions,
-    loading:{}
+    loading:loadingOptions
   };
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
         {createPortal(
             <ContainerComponent {...containerOpts}>
                 {state.toasts.map((toast) => {
-                  const {options , ...rest} = toast;
+                  const {options , renderCustomToast, ...rest} = toast;
                   const typeSpecificOptions:ToastOptions = typeOptionsMap[toast.type as ToastType] || {};
                   const mergedOptions = mergeOptions(
                       TOAST_DEFAULT_OPTIONS,            // Default toast options
@@ -51,9 +52,10 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
                       typeSpecificOptions,               // Type-specific options (success, error, etc.)
                       options                            // Toast-specific options
                   );
+                  const CustomComponent = renderCustomToast ;
 
-                  return (<ToastController gutter={gutter}  key={toast.id}  toastContextProps={{...rest , options:mergedOptions}} newestFirst={newestFirst}>
-                    {ToastComponent}
+                  return (<ToastController gutter={gutter}  key={`Controller_${toast.id}`}  toastContextProps={{...rest , options:mergedOptions}} newestFirst={newestFirst}>
+                    {(CustomComponent) ? CustomComponent : ToastComponent}
                   </ToastController>)
                 })}
             </ContainerComponent>

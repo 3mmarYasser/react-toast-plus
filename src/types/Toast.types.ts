@@ -64,6 +64,7 @@ interface ToastContextProps{
     element?: {
         height?: number;
     }
+    renderCustomToast?: ((props: ToastProps) => ReactNode);
 }
 interface AutoCloseHandler {
     start: (duration: number, onEnd: ToastContextProps["onClose"]) => void;
@@ -75,7 +76,7 @@ interface AutoCloseHandler {
     isPaused:boolean;
 }
 
-interface ToastProps extends ToastContextProps, Partial<AutoCloseHandler>{
+interface ToastProps extends Omit<ToastContextProps, "renderCustomToast">, Partial<AutoCloseHandler>{
 }
 interface State {
     toasts: ToastContextProps[];
@@ -106,12 +107,12 @@ interface containerOptions extends Omit<ToastContainerProps, "children">{
 }
 interface MainToastOptions extends  ToastOptions{
     component?: React.ElementType<ToastProps>;
-
     successOptions?: ToastOptions;
     errorOptions?: ToastOptions;
     warningOptions?: ToastOptions;
     infoOptions?: ToastOptions;
     emptyOptions?: ToastOptions;
+    loadingOptions?: ToastOptions;
 }
 
 interface ToastProviderProps{

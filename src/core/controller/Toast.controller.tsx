@@ -56,7 +56,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
   }, [state, transitionDuration]);
 
   useEffect(() => {
-    if (pauseOnFocusLoss) {
+    if (pauseOnFocusLoss && autoClose) {
       const handleWindowBlur = () => autoCloseProps.pause();
       const handleWindowFocus = () => autoCloseProps.resume();
       window.addEventListener('blur', handleWindowBlur);
@@ -67,7 +67,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
         window.removeEventListener('focus', handleWindowFocus);
       };
     }
-  }, [pauseOnFocusLoss]);
+  }, [pauseOnFocusLoss ,autoClose]);
 
 
   const prevElementRefProps = useRef<Required<ToastContextProps["element"]>>({
@@ -150,7 +150,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
                    ...getPositionStyles(placement),
                    [placement.includes('top') ? 'top' : 'bottom']: 0,
                  }}>
-                <Children  {...newToastContextProps} {...autoCloseProps} onClose={handleClose}/>
+                <Children key={toastContextProps.id}  {...newToastContextProps} {...autoCloseProps} onClose={handleClose}/>
             </div>
   );
 };

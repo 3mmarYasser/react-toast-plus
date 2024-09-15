@@ -13,13 +13,17 @@ createRoot(document.getElementById('root')!).render(
 
             toastOptions={{
                 className: 'toast',
-                autoClose: false,
                 lifetime: 3000,
-                transition: 'zoom',
+                transition: 'bounce',
                 transitionDuration: 500,
                 pauseOnHover: true,
                 closeOnClick: true,
                 draggableClose:true,
+                loadingOptions:{
+                    style:{
+                        background: 'gray'
+                    }
+                },
             }}
         >
             <h1>Hello From toast Provider</h1>

@@ -10,7 +10,7 @@ interface FormData {
 }
 
 const App: FunctionComponent = () => {
-    const { addToast ,removeToast } = useToast();
+    const { addToast} = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
@@ -30,11 +30,37 @@ const App: FunctionComponent = () => {
             className: 'custom-toast',
             placement: formData.placement,
            transition: formData.transition,
-           lifetime: Math.floor(Math.random() * 20000),
+           lifetime: 3000,
 
         } );
     }
-
+    const callPromise = () => {
+        const someAsyncFunction = (): Promise<string> => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const isSuccess = Math.random() > 0.5;
+                    if (isSuccess) {
+                        resolve("Success!");
+                    } else {
+                        reject("Failed!");
+                    }
+                }, 1000);
+            });
+        };
+        addToast.promise(someAsyncFunction ,{pending:"Pending" ,success:"Success" ,error:"Error"})
+    }
+const addCustomToast = () => {
+    addToast.custom(({options ,isPaused}) => {
+        const {style ,className ,} = options ||{};
+        return (
+            <div className={className} style={style}>
+                <h1>Custom Toast</h1>
+                <p>This is a custom toast</p>
+                {isPaused && <p>Paused</p>}
+            </div>
+        );
+    },{placement:"top-center" ,transition:"slide" ,lifetime:5000 ,autoClose:true});
+}
   return (<>
       <form onSubmit={handleSubmit} >
           <label>
@@ -50,6 +76,7 @@ const App: FunctionComponent = () => {
                     <option value="success">Success</option>
                     <option value="warning">Warning</option>
                     <option value="error">Error</option>
+                    <option value="loading">Loading</option>
               </select>
           </label>
           <br/>
@@ -77,12 +104,13 @@ const App: FunctionComponent = () => {
           <br/>
           <button type="submit">Make A Toast</button>
       </form>
-      <button onClick={()=>{
-          removeToast.byIndex?.(0);
-      }}>
-          Remove idx 0
+      <button onClick={callPromise}>
+          Promise Toast
       </button>
-
+      <br/>
+      <button onClick={addCustomToast}>
+            Custom Toast
+      </button>
   </>);
 
 };

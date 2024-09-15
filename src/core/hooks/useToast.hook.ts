@@ -22,12 +22,46 @@ export const useToast = () => {
         };
     };
 
-    const createToastMethod = (type: ToastType) => (message: ToastContextProps["message"], options?: ToastOptions) => addToast(message, type, options);
+    const createToastMethod = (type: ToastType) => (message: ToastContextProps["message"], options?:ToastOptions) => addToast(message, type, options);
     addToast.success = createToastMethod('success');
     addToast.error = createToastMethod('error');
     addToast.warning = createToastMethod('warning');
     addToast.info = createToastMethod('info');
     addToast.empty = createToastMethod('empty');
+    addToast.loading = createToastMethod('loading');
+    addToast.promise = <T>(promiseOrFunction: Promise<T> | (() => Promise<T>),
+                        messages: { pending: string, success: string, error: string },
+                        options?: ToastOptions) => {
+        const id = addToast(messages.pending, 'loading', options).id;
+
+        const promise = typeof promiseOrFunction === 'function' ? promiseOrFunction() : promiseOrFunction;
+        promise
+            .then(() => {
+                updateToast({ id, message: messages.success, type: 'success' });
+            })
+            .catch(() => {
+                updateToast({ id, message: messages.error, type: 'error' });
+            });
+
+        return {
+            id,
+        };
+    };
+    addToast.custom = (renderFunction:ToastContextProps["renderCustomToast"], options?: ToastOptions) => {
+        const id = generateId();
+        dispatch({
+            type: ActionTypes.ADD_TOAST,
+            toast: {
+                id,
+                message: "",
+                onClose: removeToast,
+                renderCustomToast: renderFunction,
+                options
+            },
+        });
+
+        return { id };
+    };
 
     const removeToast = (id: ToastContextProps['id']) => {
         dispatch({ type: ActionTypes.REMOVE_TOAST, id });
