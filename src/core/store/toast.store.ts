@@ -1,4 +1,4 @@
-import {Action, ActionTypes,  State } from "../../types/Toast.types.ts";
+import {Action, ActionTypes, State} from "../../types";
 
 export const toastReducer = (state:State , action:Action) :State=>{
     switch (action.type) {

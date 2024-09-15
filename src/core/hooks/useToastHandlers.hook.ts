@@ -1,6 +1,6 @@
 import {useCallback} from "react";
 import {useToastStore} from "./useToastStore.hook.ts";
-import {ActionTypes, ToastContextProps} from "../../types/Toast.types.ts";
+import {ActionTypes, ToastContextProps} from "../../types";
 
 export const useToastHandlers = () => {
     const {toasts ,dispatch} = useToastStore();

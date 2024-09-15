@@ -1,5 +1,5 @@
 import {useCallback, useRef, useState} from 'react';
-import {AutoCloseHandler, ToastContextProps, ToastProps} from '../../types/Toast.types.ts';
+import {AutoCloseHandler, ToastContextProps, ToastProps} from "../../types";
 
 export const useAutoClose = (id: ToastProps["id"] ,onEnd: ToastContextProps["onClose"]): AutoCloseHandler => {
     const [endTime, setEndTime] = useState<number | null>(null);

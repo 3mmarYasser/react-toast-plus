@@ -1,16 +1,12 @@
 import {FunctionComponent, useCallback, useEffect, useRef, useState} from 'react';
 import {useAutoClose} from "../hooks/useAutoClose.hook.ts";
 import {useToastHandlers} from "../hooks/useToastHandlers.hook.ts";
-import {
-  ToastContextProps,
-  ToastControllerProps,
-  TransitionState
-} from "../../types/Toast.types.ts";
 import {useToast} from "../hooks/useToast.hook.ts";
 import {NEWEST_FIRST, TOAST_PLACEMENT, TOAST_TRANSITION, TOAST_TRANSITION_DURATION} from "../config/config.ts";
 import {getPositionStyles, getTransitionStyles} from "../../utils/styles.helper.ts";
 import {useDraggableClose} from "../hooks/useDraggableClose.hook.ts";
 import {toastControllerClass} from "../../styles";
+import {ToastContextProps, ToastControllerProps, TransitionState} from "../../types";
 
 
 const ToastController: FunctionComponent<ToastControllerProps>= ({children:Children , toastContextProps ,gutter ,newestFirst =NEWEST_FIRST}) => {

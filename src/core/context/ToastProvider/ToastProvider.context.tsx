@@ -1,5 +1,4 @@
 import {FunctionComponent, createContext, useReducer, useEffect} from 'react';
-import {ToastContextType, ToastOptions, ToastProviderProps, ToastType} from "../../../types/Toast.types.ts";
 import ToastContainer from "../../../components/ToastContainer/ToastContainer.component.tsx";
 import {createPortal} from "react-dom";
 import {toastReducer} from "../../store/toast.store.ts";
@@ -8,6 +7,7 @@ import {Gutter, TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
 import {mergeOptions} from "../../../utils/mergeOptions.helper.ts";
 import ToastController from "../../controller/Toast.controller.tsx";
 import {GlobalStyles} from "../../../styles";
+import {ToastContextType, ToastOptions, ToastProviderProps, ToastType} from "../../../types";
 
 export const ToastContext = createContext<ToastContextType |undefined>(undefined);
 

@@ -1,8 +1,9 @@
-import {FunctionComponent, useEffect, useState} from 'react';
-import {ToastProps} from "../../types/Toast.types.ts";
+import {FunctionComponent, isValidElement, useEffect, useState} from 'react';
 import {StyledToaster} from "../../styles";
+import {ToastProps} from "../../types";
 
-const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose   ,options ={}  ,remainingTime }) => {
+const ToasterComponent: FunctionComponent<ToastProps> = (props) => {
+    const {id  ,content ,onClose   ,options ={}  ,remainingTime } = props;
     const {
         className ,
         style ,
@@ -29,10 +30,19 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
     }, [id, onClose, remainingTime ,autoClose]);
 
     const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
-
+    const renderContent = () => {
+        if (typeof content === 'string') {
+            return content;
+        } else if (isValidElement(content)) {
+            return content;
+        } else if (typeof content === 'function') {
+            return content(props);
+        }
+        return null;
+    };
   return (
       <StyledToaster className={className} style={style} >
-          <p>{message}</p>
+          {renderContent()}
           <button style={{
               marginLeft: '100px',
               border: 'none',

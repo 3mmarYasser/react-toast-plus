@@ -1,7 +1,7 @@
 import  { FunctionComponent } from 'react';
-import {ToastContainerProps} from "../../types/Toast.types.ts";
 import {classNames} from "../../utils/classNames.helper.ts";
 import {StyledToastContainer} from "../../styles";
+import {ToastContainerProps} from "../../types";
 
 
 

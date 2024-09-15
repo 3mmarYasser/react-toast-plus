@@ -1,17 +1,17 @@
-import {ActionTypes, ToastOptions, ToastContextProps, ToastType} from "../../types/Toast.types.ts";
 import {generateId} from "../../utils/generateId.helper.ts";
 import {useToastStore} from "./useToastStore.hook.ts";
+import {ActionTypes, ToastContextProps, ToastOptions, ToastType} from "../../types";
 
 export const useToast = () => {
     const {dispatch , toasts} = useToastStore();
 
-    const addToast = (message: ToastContextProps["message"], type: ToastType ,options?:ToastOptions):Pick<ToastContextProps, "id"> => {
+    const addToast = (content: ToastContextProps["content"], type: ToastType ,options?:ToastOptions):Pick<ToastContextProps, "id"> => {
         const id = generateId();
         dispatch({
             type: ActionTypes.ADD_TOAST,
             toast: {
                 id,
-                message,
+                content,
                 type,
                 onClose: removeToast,
                 options,
@@ -22,7 +22,7 @@ export const useToast = () => {
         };
     };
 
-    const createToastMethod = (type: ToastType) => (message: ToastContextProps["message"], options?:ToastOptions) => addToast(message, type, options);
+    const createToastMethod = (type: ToastType) => (message: ToastContextProps["content"], options?:ToastOptions) => addToast(message, type, options);
     addToast.success = createToastMethod('success');
     addToast.error = createToastMethod('error');
     addToast.warning = createToastMethod('warning');
@@ -42,10 +42,10 @@ export const useToast = () => {
         const promise = typeof promiseOrFunction === 'function' ? promiseOrFunction() : promiseOrFunction;
         promise
             .then(() => {
-                updateToast({ id, message: messages.success, type: 'success',options });
+                updateToast({ id, content: messages.success, type: 'success',options });
             })
             .catch(() => {
-                updateToast({ id, message: messages.error, type: 'error',options });
+                updateToast({ id, content: messages.error, type: 'error',options });
             });
 
         return {
@@ -58,7 +58,7 @@ export const useToast = () => {
             type: ActionTypes.ADD_TOAST,
             toast: {
                 id,
-                message: "",
+                content: "",
                 onClose: removeToast,
                 renderCustomToast: renderFunction,
                 options

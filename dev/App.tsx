@@ -26,7 +26,7 @@ const App: FunctionComponent = () => {
     },[toasts] )
 
 
-    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-right" ,transition:"slide" });
+    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-right" ,transition:"bounce" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -65,6 +65,19 @@ const App: FunctionComponent = () => {
 const addCustomToast = () => {
     addToast.custom(CustomToast,{placement:"top-center" ,transition:"slide" ,lifetime:5000 ,autoClose:true});
 }
+
+const addJSXToast = () => {
+        addToast(({id,onClose})=> (<span>
+            <strong>JSX Toast</strong>
+            <span>This is a JSX Toast</span>
+            <button onClick={()=>onClose(id)}>Close</button>
+        </span>), "success", {
+            placement:"bottom-center",
+            transition:"zoom",
+            lifetime:5000,
+            autoClose:true,
+        });
+}
   return (<>
       <form onSubmit={handleSubmit} >
           <label>
@@ -99,8 +112,8 @@ const addCustomToast = () => {
           <label>
               Transition :
               <select name={"transition"} onChange={handleInputChange}>
-                  <option value="slide">Slide</option>
                   <option value="bounce">Bounce</option>
+                  <option value="slide">Slide</option>
                   <option value="fade">Fade</option>
                   <option value="zoom">Zoom</option>
               </select>
@@ -115,6 +128,10 @@ const addCustomToast = () => {
       <button onClick={addCustomToast}>
             Custom Toast
       </button>
+      <br/>
+      <button onClick={addJSXToast}>
+          JSX Toast
+        </button>
   </>);
 
 };

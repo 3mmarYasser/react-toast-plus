@@ -1,9 +1,9 @@
-import {Placement, ToastOptions, ToastStylesProps, ToastTransitionType} from "../../types/Toast.types.ts";
+import {Placement, ToastOptions, ToastStylesProps, ToastTransitionType} from "../../types";
 
 export const TOAST_LIFETIME:ToastOptions['lifetime'] = 5000;
 export const TOAST_PLACEMENT:Placement = 'top-right';
 export const TOAST_TRANSITION_DURATION = 300;
-export const TOAST_TRANSITION:ToastTransitionType = 'slide';
+export const TOAST_TRANSITION:ToastTransitionType = 'bounce';
 export const NEWEST_FIRST = true;
 export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     lifetime: TOAST_LIFETIME,

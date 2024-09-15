@@ -1,5 +1,5 @@
 import {classNames} from "./classNames.helper.ts";
-import {ToastOptions} from "../types/Toast.types.ts";
+import {ToastOptions} from "../types";
 
 export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | undefined>):ToastOptions => {
     const reversedOptionsArray = [...optionsArray].reverse();

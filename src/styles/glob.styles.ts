@@ -1,6 +1,6 @@
-import {ToastStylesProps} from "react-toast-plus";
 import {DEFAULT_TOAST_STYLES} from "../core/config/config.ts";
 import {glob} from "goober";
+import {ToastStylesProps} from "../types";
 
 export const GlobalStyles = (toastStyle?:Partial<ToastStylesProps>)=>{
     const styles:ToastStylesProps = { ...DEFAULT_TOAST_STYLES, ...toastStyle };

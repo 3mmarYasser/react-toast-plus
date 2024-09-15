@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {ToastContextProps, ToastOptions} from "react-toast-plus";
+import {ToastContextProps, ToastOptions} from "../../types";
 
 export const useDraggableClose =(id:ToastContextProps['id'] , onClose:ToastContextProps['onClose'] ,draggableClose:ToastOptions['draggableClose']  )=>{
     const [dragDistance, setDragDistance] = useState(0);

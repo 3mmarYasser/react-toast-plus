@@ -1,12 +1,7 @@
 
 import React from "react";
-import {
-    DefaultTransitionsMap,
-    Placement,
-    ToastTransitionType,
-    TransitionsMap,
-    TransitionState
-} from "../types/Toast.types.ts";
+import {DefaultTransitionsMap, Placement, ToastTransitionType, TransitionsMap, TransitionState} from "../types";
+
 
 export const getTransitionStyles = (state: TransitionState, type: ToastTransitionType ,duration:number ,placement:Placement): React.CSSProperties => {
     const right:number = placement.includes("right")? 1 : -1;
