@@ -2,7 +2,7 @@ import {FunctionComponent, useEffect, useState} from 'react';
 import {ToastProps} from "../../types/Toast.types.ts";
 import {StyledToaster} from "../../styles";
 
-const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose   ,options ={}  ,remainingTime}) => {
+const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose   ,options ={}  ,remainingTime }) => {
     const {
         className ,
         style ,
@@ -20,7 +20,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
                     clearInterval(interval);
                     onClose(id);
                 }
-                console.log(id, timeLeft);
+                // console.log(id, timeLeft);
             }, 100);
 
             return () => clearInterval(interval);
@@ -28,6 +28,7 @@ const ToasterComponent: FunctionComponent<ToastProps> = ({id  ,message ,onClose 
     }, [id, onClose, remainingTime ,autoClose]);
 
     const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
+
   return (
       <StyledToaster className={className} style={style} >
           <p>{message}</p>
