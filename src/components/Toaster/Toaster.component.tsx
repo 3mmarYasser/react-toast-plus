@@ -1,35 +1,20 @@
-import {FunctionComponent, isValidElement, useEffect, useState} from 'react';
-import {StyledToaster} from "../../styles";
+import {FunctionComponent, isValidElement} from 'react';
+import {CloseButton, StyledProgressBar, StyledToaster, StyledToasterContent} from "../../styles";
 import {ToastProps} from "../../types";
+import CloseIcon from "../Icons/Close.icon.tsx";
 
 const ToasterComponent: FunctionComponent<ToastProps> = (props) => {
-    const {id  ,content ,onClose   ,options ={}  ,remainingTime } = props;
+    const {id  ,type,content ,onClose   ,options ={} ,isRunning  } = props;
     const {
         className ,
         style ,
         lifetime,
-        autoClose
+        autoClose,
+        progressBar,
+        closeButton
     } = options;
-    const [remaining, setRemaining] = useState<number>(remainingTime || lifetime ||0);
-    // useEffect(() => {
-    //     console.log(remaining);
-    // }, [remaining]);
-    useEffect(() => {
-        if(remainingTime &&autoClose){
-            const interval = setInterval(() => {
-                const timeLeft = remainingTime();
-                // console.log(remainingTime());
-                setRemaining(timeLeft);
-                if (timeLeft <= 0) {
-                    clearInterval(interval);
-                }
-            }, 100);
 
-            return () => clearInterval(interval);
-        }
-    }, [id, onClose, remainingTime ,autoClose]);
 
-    const progressPercentage = lifetime ? (remaining / lifetime) * 100 : 100;
     const renderContent = () => {
         if (typeof content === 'string') {
             return content;
@@ -40,28 +25,26 @@ const ToasterComponent: FunctionComponent<ToastProps> = (props) => {
         }
         return null;
     };
+
   return (
       <StyledToaster className={className} style={style} >
-          {renderContent()}
-          <button style={{
-              marginLeft: '100px',
-              border: 'none',
-              background: 'none',
-              cursor: 'pointer',
-              color: 'red',
-          }} onClick={() => {
-              onClose(id);
-          }}>X</button>
-          <div
-              style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  height: '4px',
-                  backgroundColor: '#00bfff',  // Customize color
-                  width: `${progressPercentage}%`,
-              }}
-          />
+          <StyledToasterContent>
+              {renderContent()}
+          </StyledToasterContent>
+          {(closeButton?.visible) &&
+              <CloseButton className={closeButton.className} style={closeButton.style} onClick={() => onClose(id)}>
+                  <CloseIcon/>
+              </CloseButton>
+          }
+          {(autoClose && progressBar?.visible) &&
+              <StyledProgressBar
+                  key={`${id}-progress-bar`}
+                  type={type ||'empty'}
+                  state={isRunning ? 'running' : 'paused'}
+                  duration={lifetime ?? 0}
+                  className={progressBar.className}
+                  style={progressBar.style}/>}
+
       </StyledToaster>
   );
 };

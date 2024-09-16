@@ -22,19 +22,36 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     placement: TOAST_PLACEMENT,
     transition: TOAST_TRANSITION,
 }
+export const DEFAULT_TOAST_LOADING_OPTIONS:ToastOptions = {
+    lifetime: 0,
+    autoClose: false,
+    progressBar: {
+        visible: false,
+    },
+    closeButton:{
+        visible: false,
+    },
+    pauseOnHover: false,
+    pauseOnFocusLoss: false,
+    closeOnClick: false,
+    draggableClose: false,
+}
 export const Gutter = 6;
 
 export const DEFAULT_TOAST_STYLES:ToastStylesProps = {
-    toastWidth: "320px",
+    toastMaxWidth: "320px",
+    toastMinWidth: "150px",
     toastMinHeight: "48px",
-    toastFontFamily: "sans-serif",
     toastBgColor: "white",
-    toastTextColor: "black",
-    toastSuccessIconColor: "green",
-    toastInfoIconColor: "blue",
-    toastWarningIconColor: "yellow",
-    toastErrorIconColor: "red",
-    toastLoadingIconColor: "gray",
-    toastRadius: "8px",
-    toastZIndex: "999"
+    toastTextColor: "#5C5C5C",
+    toastEmptyColor: "gray",
+    toastSuccessColor: "green",
+    toastInfoColor: "blue",
+    toastWarningColor: "yellow",
+    toastErrorColor: "red",
+    toastLoadingColor: "gray",
+    toastBoxShadow: "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05)",
+    toastPadding: "1rem",
+    toastRadius: "4px",
+    toastFontFamily: "Verdana, sans-serif",
 }

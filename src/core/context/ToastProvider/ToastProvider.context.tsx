@@ -3,7 +3,7 @@ import ToastContainer from "../../../components/ToastContainer/ToastContainer.co
 import {createPortal} from "react-dom";
 import {toastReducer} from "../../store/toast.store.ts";
 import Toaster from "../../../components/Toaster/Toaster.component.tsx";
-import {Gutter, TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
+import {DEFAULT_TOAST_LOADING_OPTIONS, Gutter, TOAST_DEFAULT_OPTIONS} from "../../config/config.ts";
 import {mergeOptions} from "../../../utils/mergeOptions.helper.ts";
 import ToastController from "../../controller/Toast.controller.tsx";
 import {GlobalStyles} from "../../../styles";
@@ -23,7 +23,7 @@ const ToastProvider: FunctionComponent<ToastProviderProps> = ({children ,contain
     warningOptions={},
     infoOptions={},
     emptyOptions={},
-      loadingOptions={},
+    loadingOptions=DEFAULT_TOAST_LOADING_OPTIONS,
     ...defaultOpts } = toastOptions;
 
   const typeOptionsMap:Record<ToastType, object> = {

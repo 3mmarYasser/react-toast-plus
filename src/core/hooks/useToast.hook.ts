@@ -29,23 +29,31 @@ export const useToast = () => {
     addToast.info = createToastMethod('info');
     addToast.empty = createToastMethod('empty');
     addToast.loading = createToastMethod('loading');
-    addToast.promise = <T>(promiseOrFunction: Promise<T> | (() => Promise<T>),
-                        messages: { pending: string, success: string, error: string },
-                        options?: ToastOptions) => {
-        const id = addToast(messages.pending, 'loading', {
-            ...options,
-            autoClose: false,
-            pauseOnHover: false,
-            pauseOnFocusLoss: false,
-        }).id;
+
+    addToast.promise = <T>(
+        promiseOrFunction: Promise<T> | (() => Promise<T>),
+        messages: {
+            pending: string ,
+            success: string | ((data: T) => string),
+            error:  string | ((err: T) => string),
+        },
+        options?: Omit<ToastOptions, "autoClose" |"closeButton" |"draggableClose"> &{
+            success?: ToastOptions,
+            error?: ToastOptions
+        }
+    ) => {
+        const {success ,error , ...rest} = options ||{};
+        const id = addToast( messages.pending, 'loading' , rest).id;
 
         const promise = typeof promiseOrFunction === 'function' ? promiseOrFunction() : promiseOrFunction;
         promise
-            .then(() => {
-                updateToast({ id, content: messages.success, type: 'success',options });
+            .then((result) => {
+                const successMessage = typeof messages.success === 'function' ? messages.success(result) : messages.success;
+                updateToast({ id, content: successMessage, type: 'success', options:success });
             })
-            .catch(() => {
-                updateToast({ id, content: messages.error, type: 'error',options });
+            .catch((err) => {
+                const errorMessage = typeof messages.error === 'function' ? messages.error(err) : messages.error;
+                updateToast({ id, content: errorMessage, type: 'error',options:error });
             });
 
         return {

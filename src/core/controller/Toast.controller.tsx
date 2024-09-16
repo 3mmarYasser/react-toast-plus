@@ -32,7 +32,7 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     setTimeout(() => {toastContextProps.onClose(id);},transitionDuration)
   }, [transitionDuration]);
 
-  const autoCloseProps = useAutoClose(toastContextProps.id ,handleClose);
+  const autoCloseProps = useAutoClose(toastContextProps.id ,handleClose ,pauseOnFocusLoss);
 
 
 
@@ -59,19 +59,6 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
     }
   }, [state, transitionDuration]);
 
-  useEffect(() => {
-    if (pauseOnFocusLoss && autoClose) {
-      const handleWindowBlur = () => autoCloseProps.pause();
-      const handleWindowFocus = () => autoCloseProps.resume();
-      window.addEventListener('blur', handleWindowBlur);
-      window.addEventListener('focus', handleWindowFocus);
-
-      return () => {
-        window.removeEventListener('blur', handleWindowBlur);
-        window.removeEventListener('focus', handleWindowFocus);
-      };
-    }
-  }, [pauseOnFocusLoss ,autoClose]);
 
 
   const prevElementRefProps = useRef<Required<ToastContextProps["element"]>>({
@@ -103,12 +90,17 @@ const ToastController: FunctionComponent<ToastControllerProps>= ({children:Child
 
   }, [autoClose, lifetime]);
 
-
+  useEffect(() => {
+    if (isDragging){
+      autoCloseProps.pause();
+    }
+  }, [isDragging]);
 
   const handelCloseOnClick = useCallback(() => {
     if (!wasDragged) {
       handleClose(toastContextProps.id)
     }},[wasDragged]);
+
 
   const offset = calcToastOffset(toastContextProps,{gutter ,newestFirst})
 

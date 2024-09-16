@@ -31,9 +31,9 @@ interface ToastOptions {
         style?: React.CSSProperties;//
     };
     progressBar?:{
-        visible?: boolean;//
-        className?: string;//
-        style?: React.CSSProperties;//
+        visible?: boolean;//✔
+        className?: string;//✔
+        style?: React.CSSProperties;//✔
     }
     transition?: ToastTransitionType;//✔
     transitionDuration?: number;//✔
@@ -102,18 +102,21 @@ interface ToastControllerProps {
 
 
 interface ToastStylesProps {
-    toastWidth: string;
+    toastMaxWidth: string;
+    toastMinWidth: string;
     toastMinHeight: string;
     toastFontFamily: string;
     toastBgColor: string;
     toastTextColor: string;
-    toastSuccessIconColor: string;
-    toastInfoIconColor: string;
-    toastWarningIconColor: string;
-    toastErrorIconColor: string;
-    toastLoadingIconColor: string;
+    toastEmptyColor: string;
+    toastSuccessColor: string;
+    toastInfoColor: string;
+    toastWarningColor: string;
+    toastErrorColor: string;
+    toastLoadingColor: string;
     toastRadius: string;
-    toastZIndex: string;
+    toastPadding: string;
+    toastBoxShadow: string;
 }
 export type
 {

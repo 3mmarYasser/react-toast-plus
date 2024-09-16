@@ -26,7 +26,7 @@ const App: FunctionComponent = () => {
     },[toasts] )
 
 
-    const [formData, setFormData] = React.useState<FormData>({ msg: 'Hello World', type: "empty" ,placement:"top-right" ,transition:"bounce" });
+    const [formData, setFormData] = React.useState<FormData>({ msg: '😊 Hello World', type: "empty" ,placement:"top-right" ,transition:"bounce" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -39,8 +39,6 @@ const App: FunctionComponent = () => {
             className: 'custom-toast',
             placement: formData.placement,
            transition: formData.transition,
-           lifetime: 3000,
-
         } );
     }
     const callPromise = () => {
@@ -53,17 +51,14 @@ const App: FunctionComponent = () => {
                     } else {
                         reject("Failed!");
                     }
-                }, 1000);
+                }, 4000);
             });
         };
         addToast.promise(someAsyncFunction ,{pending:"Pending" ,success:"Success" ,error:"Error"} ,{
-            autoClose:true,
-            pauseOnHover:true,
-            pauseOnFocusLoss:true,
         })
     }
 const addCustomToast = () => {
-    addToast.custom(CustomToast,{placement:"top-center" ,transition:"slide" ,lifetime:5000 ,autoClose:true});
+    addToast.custom(CustomToast,{placement:formData.placement ,transition:formData.transition ,lifetime:5000 ,autoClose:true});
 }
 
 const addJSXToast = () => {
@@ -72,8 +67,8 @@ const addJSXToast = () => {
             <span>This is a JSX Toast</span>
             <button onClick={()=>onClose(id)}>Close</button>
         </span>), "success", {
-            placement:"bottom-center",
-            transition:"zoom",
+            placement:formData.placement,
+            transition:formData.transition,
             lifetime:5000,
             autoClose:true,
         });

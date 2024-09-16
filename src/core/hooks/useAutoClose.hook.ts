@@ -1,7 +1,7 @@
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {AutoCloseHandler, ToastContextProps, ToastProps} from "../../types";
 
-export const useAutoClose = (id: ToastProps["id"] ,onEnd: ToastContextProps["onClose"]): AutoCloseHandler => {
+export const useAutoClose = (id: ToastProps["id"] ,onEnd: ToastContextProps["onClose"] ,pauseOnFocusLoss?: boolean): AutoCloseHandler => {
     const [endTime, setEndTime] = useState<number | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -77,6 +77,20 @@ export const useAutoClose = (id: ToastProps["id"] ,onEnd: ToastContextProps["onC
         }
         return remaining;
     }, [isRunning, endTime, remaining]);
+
+    useEffect(() => {
+        if (pauseOnFocusLoss) {
+            if (!document.hasFocus()) pause();
+
+            window.addEventListener('blur', pause);
+            window.addEventListener('focus', resume);
+
+            return () => {
+                window.removeEventListener('blur', pause);
+                window.removeEventListener('focus', resume);
+            };
+        }
+    }, [pauseOnFocusLoss, pause, resume]);
 
     return {
         start,
