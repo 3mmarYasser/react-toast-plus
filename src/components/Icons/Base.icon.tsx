@@ -1,6 +1,6 @@
 import React, { FunctionComponent ,ReactNode ,ReactElement } from 'react';
 import {StyledBaseIcon} from "../../styles";
-import {ToastType} from "react-toast-plus";
+import {ToastType} from "../../types";
 
 interface OwnProps {
     children?: ReactNode |ReactElement;

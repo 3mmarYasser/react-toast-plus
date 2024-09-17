@@ -1,8 +1,8 @@
 // noinspection CssUnresolvedCustomProperty
 
 import {css, keyframes, styled} from "goober";
-import {ToastType} from "react-toast-plus";
 import {colorByType} from "./glob.styles.ts";
+import {ToastType} from "../types";
 
 export const StyledToastContainer = styled('div')`
     position: fixed;
