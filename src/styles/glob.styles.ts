@@ -17,7 +17,8 @@ export const GlobalStyles = (toastStyle?:Partial<ToastStylesProps>)=>{
             --toast-info-color: ${styles.toastInfoColor};
             --toast-warning-color: ${styles.toastWarningColor};
             --toast-error-color: ${styles.toastErrorColor};
-            --toast-loading-color: ${styles.toastLoadingColor};
+            --toast-loader-color: ${styles.toastLoaderColor};
+            --toast-loader-area-color: ${styles.toastLoaderAreaColor};
             --toast-radius: ${styles.toastRadius};
             --toast-padding: ${styles.toastPadding};
             --toast-shadow: ${styles.toastBoxShadow};

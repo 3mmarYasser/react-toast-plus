@@ -36,12 +36,14 @@ export const StyledToaster = styled('div')`
     font-family: var(--toast-font-family);
     overflow: hidden;
     padding: var(--toast-padding);
-    gap: 1rem;
+    gap: 10px;
 `;
 export const StyledToasterContent = styled('div')`
-    white-space: pre-line;
     flex: 1 1 auto;
-
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    white-space: pre-line;
 `;
 export const progressBarAnimation = keyframes`
     0% {
@@ -63,7 +65,7 @@ export const StyledProgressBar = styled('div')<{type:ToastType ,duration:number 
     animation-duration: ${props => props.duration}ms;
     animation-play-state: ${props => props.state};
 `;
-export const CloseButton = styled('button')`
+export const StyledCloseButton = styled('button')`
     border: none;
     background: none;
     cursor: pointer;

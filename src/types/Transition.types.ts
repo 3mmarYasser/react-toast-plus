@@ -6,7 +6,8 @@ type ToastTransitionType =
     | 'slide'
     | 'bounce';
 
-type TransitionState = 'unmounted'|'entering' | 'entered' | 'exiting' | 'exited';
+
+type TransitionState = 'unmounted' | 'entering' | 'entered' | 'exiting' | 'exited';
 
 type TransitionStyles = {
     [key in TransitionState]: React.CSSProperties;

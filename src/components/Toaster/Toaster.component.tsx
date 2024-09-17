@@ -1,19 +1,37 @@
-import {FunctionComponent, isValidElement} from 'react';
-import {CloseButton, StyledProgressBar, StyledToaster, StyledToasterContent} from "../../styles";
-import {ToastProps} from "../../types";
-import CloseIcon from "../Icons/Close.icon.tsx";
+import React, {FunctionComponent, isValidElement} from 'react';
+import {
+    StyledCloseButton,
+    StyledIcon,
+    StyledLoadingIcon,
+    StyledProgressBar,
+    StyledToaster,
+    StyledToasterContent,
+} from "../../styles";
+import {ToastProps, ToastType} from "../../types";
+import {CloseIcon, ErrorIcon, InfoIcon, SuccessIcon, WarningIcon} from "../Icons";
+
+
+const typedIcons:Record<ToastType, React.ReactElement |null> = {
+    success: <SuccessIcon/>,
+    error: <ErrorIcon/>,
+    warning:<WarningIcon/>,
+    info: <InfoIcon/>,
+    loading: <StyledLoadingIcon/>,
+    empty: null
+};
 
 const ToasterComponent: FunctionComponent<ToastProps> = (props) => {
-    const {id  ,type,content ,onClose   ,options ={} ,isRunning  } = props;
+    const {id, type = 'empty', content, onClose, options = {}, isRunning} = props;
     const {
         className ,
         style ,
         lifetime,
         autoClose,
         progressBar,
-        closeButton
+        closeButton,
+        icon,
+        iconProps
     } = options;
-
 
     const renderContent = () => {
         if (typeof content === 'string') {
@@ -28,13 +46,18 @@ const ToasterComponent: FunctionComponent<ToastProps> = (props) => {
 
   return (
       <StyledToaster className={className} style={style} >
+          {(iconProps?.visible && ( typedIcons[type] || icon )) &&
+              <StyledIcon className={iconProps?.className} style={iconProps?.style}>
+                  {icon ?? typedIcons[type]}
+              </StyledIcon>
+          }
           <StyledToasterContent>
               {renderContent()}
           </StyledToasterContent>
           {(closeButton?.visible) &&
-              <CloseButton className={closeButton.className} style={closeButton.style} onClick={() => onClose(id)}>
+              <StyledCloseButton className={closeButton.className} style={closeButton.style} onClick={() => onClose(id)}>
                   <CloseIcon/>
-              </CloseButton>
+              </StyledCloseButton>
           }
           {(autoClose && progressBar?.visible) &&
               <StyledProgressBar

@@ -1,5 +1,12 @@
 import React, { FunctionComponent, useEffect} from 'react';
-import {Placement, ToastContextProps, ToastTransitionType, ToastType, useToast, useToastStore} from "react-toast-plus";
+import {
+    Placement,
+    ToastProps,
+    ToastTransitionType,
+    ToastType,
+    useToast,
+    useToastStore,
+} from "react-toast-plus";
 
 
 interface FormData {
@@ -8,7 +15,7 @@ interface FormData {
     placement: Placement;
     transition: ToastTransitionType;
 }
-const CustomToast:ToastContextProps["renderCustomToast"] = ({options ,isPaused}) => {
+const CustomToast:React.FunctionComponent<ToastProps> = ({options ,isPaused}) => {
     const {style ,className ,} = options ||{};
     return (
         <div className={className} style={style}>
@@ -19,14 +26,13 @@ const CustomToast:ToastContextProps["renderCustomToast"] = ({options ,isPaused})
     );
 }
 const App: FunctionComponent = () => {
-    const { addToast} = useToast();
+    const { addToast } = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
     },[toasts] )
 
-
-    const [formData, setFormData] = React.useState<FormData>({ msg: '😊 Hello World', type: "empty" ,placement:"top-right" ,transition:"bounce" });
+    const [formData, setFormData] = React.useState<FormData>({msg: '😊 Hello World', type: "empty" ,placement:"top-right" ,transition:"bounce" });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = event.target;
@@ -54,7 +60,10 @@ const App: FunctionComponent = () => {
                 }, 4000);
             });
         };
-        addToast.promise(someAsyncFunction ,{pending:"Pending" ,success:"Success" ,error:"Error"} ,{
+        addToast.promise(someAsyncFunction ,{
+            pending:"Pending..." ,
+            success:(data)=>`${data.toString()}` ,
+            error:(data)=>`${data.toString()}`
         })
     }
 const addCustomToast = () => {

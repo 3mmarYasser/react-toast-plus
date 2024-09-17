@@ -16,32 +16,33 @@ type Placement =
 
 
 interface ToastOptions {
-    className?: string;//✔
-    style?: React.CSSProperties//✔
-    lifetime?: number;//✔
-    autoClose?: boolean;//✔
-    pauseOnHover?: boolean;//✔
-    pauseOnFocusLoss?: boolean;//✔
-    draggableClose?: boolean;//✔
-    closeOnClick?: boolean;//✔
+    className?: string;
+    style?: React.CSSProperties
+    lifetime?: number;
+    autoClose?: boolean;
+    pauseOnHover?: boolean;
+    pauseOnFocusLoss?: boolean;
+    draggableClose?: boolean;
+    closeOnClick?: boolean;
 
     closeButton?: {
-        visible?: boolean;//
-        className?: string;//
-        style?: React.CSSProperties;//
+        visible?: boolean;
+        className?: string;
+        style?: React.CSSProperties;
     };
     progressBar?:{
-        visible?: boolean;//✔
-        className?: string;//✔
-        style?: React.CSSProperties;//✔
+        visible?: boolean;
+        className?: string;
+        style?: React.CSSProperties;
     }
-    transition?: ToastTransitionType;//✔
-    transitionDuration?: number;//✔
-    placement?: Placement;//✔
-    icon?: ReactNode;//
+    transition?: ToastTransitionType;
+    transitionDuration?: number;
+    placement?: Placement;
+    icon?: ReactNode;
     iconProps?: {
-        className?: string;//
-        style?: React.CSSProperties;//
+        visible?: boolean;
+        className?: string;
+        style?: React.CSSProperties;
     }
 }
 
@@ -113,7 +114,8 @@ interface ToastStylesProps {
     toastInfoColor: string;
     toastWarningColor: string;
     toastErrorColor: string;
-    toastLoadingColor: string;
+    toastLoaderColor: string;
+    toastLoaderAreaColor: string;
     toastRadius: string;
     toastPadding: string;
     toastBoxShadow: string;

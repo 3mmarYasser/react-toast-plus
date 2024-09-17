@@ -41,6 +41,7 @@ export  const mergeOptions = (...optionsArray: Array<Partial<ToastOptions> | und
 
         // Merge props (className and style)
         iconProps: {
+            visible: reversedOptionsArray.find(option => option?.iconProps?.visible !== undefined)?.iconProps?.visible,
             className: classNames(
                 ...optionsArray.map(option => option?.iconProps?.className).filter(Boolean)
             ),

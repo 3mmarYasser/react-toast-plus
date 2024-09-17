@@ -60,6 +60,7 @@ export const useToast = () => {
             id,
         };
     };
+
     addToast.custom = (renderFunction:ToastContextProps["renderCustomToast"], options?: ToastOptions) => {
         const id = generateId();
         dispatch({

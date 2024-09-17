@@ -14,6 +14,9 @@ export const TOAST_DEFAULT_OPTIONS:ToastOptions = {
     closeButton:{
         visible: true,
     },
+    iconProps: {
+        visible: true,
+    },
     pauseOnHover: true,
     pauseOnFocusLoss: true,
     closeOnClick: false,
@@ -31,6 +34,7 @@ export const DEFAULT_TOAST_LOADING_OPTIONS:ToastOptions = {
     closeButton:{
         visible: false,
     },
+
     pauseOnHover: false,
     pauseOnFocusLoss: false,
     closeOnClick: false,
@@ -42,16 +46,17 @@ export const DEFAULT_TOAST_STYLES:ToastStylesProps = {
     toastMaxWidth: "320px",
     toastMinWidth: "150px",
     toastMinHeight: "48px",
-    toastBgColor: "white",
+    toastBgColor: "#FFF",
     toastTextColor: "#5C5C5C",
-    toastEmptyColor: "gray",
-    toastSuccessColor: "green",
-    toastInfoColor: "blue",
-    toastWarningColor: "yellow",
-    toastErrorColor: "red",
-    toastLoadingColor: "gray",
+    toastEmptyColor: "#5C5C5C",
+    toastSuccessColor: "#17c964",
+    toastInfoColor: "#007bff",
+    toastWarningColor: "#ffcc00",
+    toastErrorColor: "#ff4d4f",
+    toastLoaderColor: "gray",
+    toastLoaderAreaColor: "rgba(0,0,0,0.1)",
     toastBoxShadow: "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05)",
-    toastPadding: "1rem",
+    toastPadding: "10px",
     toastRadius: "4px",
     toastFontFamily: "Verdana, sans-serif",
 }

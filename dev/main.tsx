@@ -11,10 +11,12 @@ createRoot(document.getElementById('root')!).render(
             newestFirst={true}
             containerOptions={{
                 className: 'toast-container',
+                portalSelector: document.getElementById('root')!,
             }}
 
             toastOptions={{
                 className: 'toast',
+                autoClose: false,
                 lifetime: 3000,
                 transition: 'bounce',
                 transitionDuration: 500,
