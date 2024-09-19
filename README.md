@@ -495,3 +495,86 @@ const ToastManager = () => {
     );
 };
 ```
+
+## Custom Styled Components
+
+In addition to providing a powerful toast notification system,
+React Toast Plus also exports various styled components 
+and icons that you can use to customize or create your own custom toasters.
+
+### Available Styled Components
+You can import and use the following styled components in your custom `Toaster`:
+
+- `StyledToaster`
+- `StyledProgressBar` (requires props `type`, `duration`, and `state`)
+- `StyledCloseButton`
+- `StyledToastContainer`
+- `StyledToasterContent`
+- `StyledLoadingIcon`
+- `SuccessIcon`
+- `ErrorIcon`
+- `WarningIcon`
+- `InfoIcon`
+- `CloseIcon`
+
+### Example Usage of Styled Components with Props
+
+Here’s an example where the `CustomToaster` is a `React.FunctionComponent<`[ToastProps](#toastprops)`>`, and values like `type`, `lifetime`, and `onClose` are passed via props.
+
+```tsx
+import { StyledToaster, StyledProgressBar, StyledCloseButton, StyledToastContainer, StyledToasterContent, SuccessIcon, CloseIcon } from 'react-toast-plus';
+import { ToastProps } from 'react-toast-plus';
+
+const CustomToaster: React.FunctionComponent<ToastProps> = ({id,type,  onClose, options  ,isRunning}) => {
+  const { autoClose = true, lifetime = 5000 } = options || {};
+
+  return (
+    <StyledToaster>
+      <StyledToastContainer>
+        <StyledToasterContent>
+           <SuccessIcon />
+          <p>Hello from componemt</p>
+          <StyledProgressBar type={type} duration={lifetime} state={isRunning?"running":"paused"} />
+          <StyledCloseButton onClick={() => onClose && onClose(id)}>
+            <CloseIcon />
+          </StyledCloseButton>
+        </StyledToasterContent>
+      </StyledToastContainer>
+    </StyledToaster>
+  );
+};
+```
+
+### Triggering the Custom Toaster with Props
+
+Here’s how you can trigger the custom toaster with the `addToast.custom` method and pass the necessary props:
+
+```tsx
+import { useToast } from 'react-toast-plus';
+
+const MyComponent = () => {
+  const { addToast } = useToast();
+
+  const showCustomToast = () => {
+    addToast.custom(CustomToaster, {
+      lifetime: 5000,
+      autoClose: true,
+    });
+  };
+
+  return (
+    <button onClick={showCustomToast}>Show Custom Toast</button>
+  );
+};
+```
+
+### Explanation
+
+- The `CustomToaster` component receives `ToastProps`, which include properties like `type`, `lifetime`, and `onClose`.
+- These props are passed into `StyledProgressBar` and other elements to render a custom toast.
+- The `addToast.custom` function is used to display the custom toast with options such as `isRuning`, `lifetime`, and `autoClose`.
+
+```ts
+addToast.custom(CustomToaster, { lifetime: 5000, autoClose: true });
+```
+
