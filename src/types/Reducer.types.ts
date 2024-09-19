@@ -26,4 +26,4 @@ interface ToastContextType {
     state: State;
     dispatch: Dispatch;
 }
-export type {Action, State, ToastContextType};
+export type {Action,Dispatch, State, ToastContextType};
