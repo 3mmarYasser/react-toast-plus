@@ -2,7 +2,7 @@
   "name": "react-toast-plus",
   "description": "React Toast Plus: A flexible, customizable, and modern toast notification library for React.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "keywords": [
     "react",
@@ -75,5 +75,10 @@
   },
   "dependencies": {
     "goober": "^2.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3mmarYasser/react-toast-plus.git"
+  },
+  "homepage": "https://github.com/3mmarYasser/react-toast-plus#readme"
 }
