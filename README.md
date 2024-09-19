@@ -253,6 +253,25 @@ Here’s the full list of toast options:
 | `iconProps.className`  | `string`                                                                                 | Custom class for the icon.                                            |
 | `iconProps.style`      | `React.CSSProperties`                                                                    | Inline styles for the icon.                                           |
 
+## ToastProps
+
+Provides all the properties passed to the toast component .
+
+| **Prop Name**      | **Description**                                                                                                           |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------|
+| **id**             | Unique identifier for the toast.                                                                                          |
+| **content**        | The message or custom content to display in the toast.                                                                    |
+| **onClose**        | Function to trigger when the toast needs to be closed.                                                                    |
+| **type**           | Specifies the type of toast (e.g., success, error).                                                                       |
+| **options**        | Custom options for configuring the toast’s behavior and style check it here [ToastOptions](#advanced-options-for-toasts). |
+| **remainingTime**  | Provides the time remaining before the toast auto-closes.                                                                 |
+| **start**          | Starts the auto-close timer for the toast.                                                                                |
+| **pause**          | Pauses the auto-close timer.                                                                                              |
+| **resume**         | Resumes the paused auto-close timer.                                                                                      |
+| **clear**          | Clears the auto-close timer.                                                                                              |
+| **isRunning**      | Indicates if the timer is currently running.                                                                              |
+| **isPaused**       | Indicates if the timer is currently paused.                                                                               |
+
 
 ## ToastProvider
 
@@ -328,7 +347,7 @@ This will render the toasts inside the element with the ID `toast-root`.
 | `infoOptions`| [ToastOptions](#advanced-options-for-toasts) | Specific options for info toasts.                                                                                                                                                                   |
 | `emptyOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for empty toasts.                                                                                                                                                                  |
 | `loadingOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for loading toasts.                                                                                                                                                                |
-| `component` | `React.ElementType<ToastProps>`  | Custom component to use for individual toasts.  |
+| `component` | `React.ElementType<`[ToastProps](#toastprops)`>`  | Custom component to use for individual toasts.  |
 
 
 ### Example for `toastOptions`
@@ -413,5 +432,6 @@ const CustomToastComponent: FunctionComponent<ToastProps> = ({content ,icon ,onC
 ```
 
 This will set the background color to dark and the text color to white.
+
 
 
