@@ -2,14 +2,32 @@
 
 React Toast Plus is a lightweight, customizable toast notification library for React. It offers support for various types of notifications, auto-close functionality, draggable close, and customizable transitions. This library is designed to be simple and highly customizable, allowing developers to easily integrate and style toasts in their React applications.
 
-## Features
+### ✨ Features
 
-- Multiple toast types: `success`, `error`, `info`, `warning`, `loading`, `empty`
-- Customizable transitions: `fade`, `zoom`, `slide`, `bounce`
-- Support for auto-close with pause on hover
-- Draggable close functionality
-- Fully customizable toast styles and icons
-- Promise-based toasts for async operations
+
+- **🔥 Lightweight & Fast**: Built for speed and performance, React Toast Plus delivers snappy notifications with zero delay, making it perfect for modern web apps.
+
+- **Complete TypeScript Support**: With robust TypeScript integration, enjoy typed toast options that ensure your toasts are consistent and bug-free, whether you're handling `success`, `error`, or even custom notifications.
+
+- **Auto-Close with Precision Control**: Toasts can auto-close after a set time. Want more control? We pass the remaining time to you, enabling advanced scenarios like progress bars and animations.
+
+- **Pause and Resume Interaction**: Timers pause automatically when users hover over the toast or switch tabs, and resume when they return—giving users a seamless experience.
+
+- **Interactive Draggable Close**: Dismiss your toasts by dragging them off the screen, adding a fun, interactive touch to your notifications.
+
+- **Portal Support**: Use the built-in `portalSelector` to place toasts anywhere within your app structure, providing complete layout flexibility.
+
+- **Hot & Customizable**: React Toast Plus is all about flexibility. Create unique toasts with customizable components like `StyledToaster`, `StyledProgressBar`, and `StyledCloseButton`. You can even inject your own transitions and icons for a fully personalized user experience.
+
+- **Highly Customizable Progress Bar**: Style the progress bar to match your app, and provide real-time feedback with `StyledProgressBar`, making the lifetime of your toasts clearly visible.
+
+- **Multiple Placement Options**: Display toasts anywhere on the screen—top-right, bottom-center, or wherever fits your design best.
+
+- **Built-in Icons & Rich Icon Library**: React Toast Plus comes with built-in icons (`SuccessIcon`, `ErrorIcon`, `WarningIcon`, `InfoIcon`, `CloseIcon`) and custom icon support, making it easy to match your app's style.
+
+- **Styled Components Ready**: Using styled-components under the hood, React Toast Plus provides fully styled, theme-aware toasts right out of the box. Plug in your own styles with the exportable components (`StyledToaster`, `StyledToastContainer`, and more).
+
+- **Flexible API for Custom Components**: Build and render your own toast components via the `addToast.custom()` function, passing your custom toast along with all configurable options.
 
 ---
 
@@ -526,10 +544,10 @@ import { StyledToaster, StyledProgressBar, StyledCloseButton, StyledToastContain
 import { ToastProps } from 'react-toast-plus';
 
 const CustomToaster: React.FunctionComponent<ToastProps> = ({id,type,  onClose, options  ,isRunning}) => {
-  const { autoClose = true, lifetime = 5000 } = options || {};
+  const { autoClose = true, lifetime = 5000 ,style } = options || {};
 
   return (
-    <StyledToaster>
+    <StyledToaster style={style}>
       <StyledToastContainer>
         <StyledToasterContent>
            <SuccessIcon />
@@ -578,3 +596,10 @@ const MyComponent = () => {
 addToast.custom(CustomToaster, { lifetime: 5000, autoClose: true });
 ```
 
+### 🛠️ Contributing
+
+Contributions, suggestions, and feedback are highly encouraged! Whether it's bug reports, new features, or improvements, feel free to check the [issues page](#) or submit a pull request. Let's collaborate and make React Toast Plus even better!
+
+### 📄 License
+
+React Toast Plus is proudly open-source under the [MIT license](LICENSE). You’re free to use it in both personal and commercial projects. Enjoy!
