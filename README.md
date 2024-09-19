@@ -103,7 +103,7 @@ You can create custom toasts by passing either a React component or a function t
 ### Example with Custom Toast Component
 
 ```tsx
-const CustomToast = ({ id, onClose }) => (
+const CustomToast: FunctionComponent<ToastProps> = ({ id, onClose }) => (
     <div>
       <strong>Custom Toast Component</strong>
       <p>This is a custom toast using a component!</p>
@@ -296,8 +296,8 @@ This will add a 16px space between each toast.
 
 ### Example with a custom container component
 
-```typescript jsx
-const CustomContainer = ({ children, ...props }) => {
+```tsx
+const CustomContainer: FunctionComponent<ToastContainerProps> = ({ children, ...props }) => {
   return <div className="custom-container" {...props}>{children}</div>;
 };
 
@@ -310,8 +310,8 @@ This will render the toasts inside the custom container.
 
 ### Example with a portal
 
-```typescript jsx
-<ToastProvider containerOptions={{ portalSelector: document.getElementById('toast-root') }}>
+```tsx
+<ToastProvider containerOptions={{ portalSelector: document.getElementById('toast-root')!}}>
   <App />
 </ToastProvider>
 ```
