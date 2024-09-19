@@ -7,7 +7,8 @@ export {
     StyledProgressBar,
     StyledCloseButton,
     StyledToastContainer,
-    StyledToasterContent
+    StyledToasterContent,
+    StyledLoadingIcon
 } from "./styles"
 export * from './components/Icons'
 export * from './types';

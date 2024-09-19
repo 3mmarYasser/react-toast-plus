@@ -26,7 +26,7 @@ const CustomToast:React.FunctionComponent<ToastProps> = ({options ,isPaused}) =>
     );
 }
 const App: FunctionComponent = () => {
-    const { addToast } = useToast();
+    const { addToast} = useToast();
     const {toasts} = useToastStore();
     useEffect(() => {
         console.log(     toasts);
@@ -82,6 +82,7 @@ const addJSXToast = () => {
             autoClose:true,
         });
 }
+
   return (<>
       <form onSubmit={handleSubmit} >
           <label>

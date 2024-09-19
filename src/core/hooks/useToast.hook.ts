@@ -5,7 +5,7 @@ import {ActionTypes, ToastContextProps, ToastOptions, ToastType} from "../../typ
 export const useToast = () => {
     const {dispatch , toasts} = useToastStore();
 
-    const addToast = (content: ToastContextProps["content"], type: ToastType ,options?:ToastOptions):Pick<ToastContextProps, "id"> => {
+    const addToast = (content: ToastContextProps["content"], type: ToastType = "empty" ,options?:ToastOptions):Pick<ToastContextProps, "id"> => {
         const id = generateId();
         dispatch({
             type: ActionTypes.ADD_TOAST,

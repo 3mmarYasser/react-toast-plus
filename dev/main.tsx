@@ -9,21 +9,23 @@ createRoot(document.getElementById('root')!).render(
         <h1 style={{color:'red'}}>Live Test For Development Mode Only</h1>
         <ToastProvider
             newestFirst={true}
+            gutter={8}
             containerOptions={{
                 className: 'toast-container',
                 portalSelector: document.getElementById('root')!,
+
             }}
 
             toastOptions={{
                 className: 'toast',
-                autoClose: false,
                 lifetime: 3000,
                 transition: 'bounce',
                 transitionDuration: 500,
                 pauseOnHover: true,
                 pauseOnFocusLoss: true,
-                closeOnClick: false,
+                closeOnClick: true,
                 draggableClose:true,
+
             }}
         >
             <h1>Hello From toast Provider</h1>
