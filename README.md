@@ -226,32 +226,32 @@ setTimeout(() => {
 
 Here’s the full list of toast options:
 
-| **Option**             | **Type**                                                                                 | **Description**                                                       |
-|------------------------|------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| `className`            | `string`                                                                                 | Custom class for the toast container.                                 |
-| `style`                | `React.CSSProperties`                                                                    | Inline styles for the toast container.                                |
-| `lifetime`             | `number`                                                                                 | Time (in milliseconds) the toast will be visible before auto-closing. |
-| `autoClose`            | `boolean`                                                                                | Determines whether the toast should auto-close. Default is `true`.    |
-| `pauseOnHover`         | `boolean`                                                                                | Pauses the toast timer when the user hovers over it.                  |
-| `pauseOnFocusLoss`     | `boolean`                                                                                | Pauses the toast timer when the window loses focus.                   |
-| `draggableClose`       | `boolean`                                                                                | Allows the toast to be closed by dragging it.                         |
-| `closeOnClick`         | `boolean`                                                                                | Closes the toast when clicked.                                        |
-| **closeButton**        | `object`                                                                                 | Customization options for the close button.                           |
-| `closeButton.visible`  | `boolean`                                                                                | Shows or hides the close button. Default is `true`.                   |
-| `closeButton.className`| `string`                                                                                 | Custom class for the close button.                                    |
-| `closeButton.style`    | `React.CSSProperties`                                                                    | Inline styles for the close button.                                   |
-| **progressBar**        | `object`                                                                                 | Customization options for the progress bar.                           |
-| `progressBar.visible`  | `boolean`                                                                                | Shows or hides the progress bar. Default is `true`.                   |
-| `progressBar.className`| `string`                                                                                 | Custom class for the progress bar.                                    |
-| `progressBar.style`    | `React.CSSProperties`                                                                    | Inline styles for the progress bar.                                   |
-| `transition`           | `'fade' ,'bounce' , 'slide' ,'zoom'`                                                     | Type of transition effect for the toast. |
-| `transitionDuration`   | `number`                                                                                 | Duration of the transition effect (in milliseconds).                  |
-| `placement`            | ` 'top-left' , 'top-right','top-center' , 'bottom-left' ,'bottom-center' 'bottom-right'` | Placement of the toast on the screen. |
-| `icon`                 | `React.ReactNode`                                                                        | Custom icon for the toast, can be a React component or JSX.           |
-| **iconProps**          | `object`                                                                                 | Customization options for the icon.                                   |
-| `iconProps.visible`    | `boolean`                                                                                | Shows or hides the icon. Default is `true`.                           |
-| `iconProps.className`  | `string`                                                                                 | Custom class for the icon.                                            |
-| `iconProps.style`      | `React.CSSProperties`                                                                    | Inline styles for the icon.                                           |
+| **Option**              | **Type**                                                                                 | **Description**                                                       |
+|-------------------------|------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| `className`             | `string`                                                                                 | Custom class for the toast container.                                 |
+| `style`                 | `React.CSSProperties`                                                                    | Inline styles for the toast container.                                |
+| `lifetime`              | `number`                                                                                 | Time (in milliseconds) the toast will be visible before auto-closing. |
+| `autoClose`             | `boolean`                                                                                | Determines whether the toast should auto-close. Default is `true`.    |
+| `pauseOnHover`          | `boolean`                                                                                | Pauses the toast timer when the user hovers over it.                  |
+| `pauseOnFocusLoss`      | `boolean`                                                                                | Pauses the toast timer when the window loses focus.                   |
+| `draggableClose`        | `boolean`                                                                                | Allows the toast to be closed by dragging it.                         |
+| `closeOnClick`          | `boolean`                                                                                | Closes the toast when clicked.                                        |
+| **closeButton**         | `object`                                                                                 | Customization options for the close button.                           |
+| `closeButton.visible`   | `boolean`                                                                                | Shows or hides the close button. Default is `true`.                   |
+| `closeButton.className` | `string`                                                                                 | Custom class for the close button.                                    |
+| `closeButton.style`     | `React.CSSProperties`                                                                    | Inline styles for the close button.                                   |
+| **progressBar**         | `object`                                                                                 | Customization options for the progress bar.                           |
+| `progressBar.visible`   | `boolean`                                                                                | Shows or hides the progress bar. Default is `true`.                   |
+| `progressBar.className` | `string`                                                                                 | Custom class for the progress bar.                                    |
+| `progressBar.style`     | `React.CSSProperties`                                                                    | Inline styles for the progress bar.                                   |
+| `transition`            | `'fade' ,'bounce' , 'slide' ,'zoom'`                                                     | Type of transition effect for the toast.                              |
+| `transitionDuration`    | `number`                                                                                 | Duration of the transition effect (in milliseconds).                  |
+| `placement`             | ` 'top-left' , 'top-right','top-center' , 'bottom-left' ,'bottom-center' 'bottom-right'` | Placement of the toast on the screen.                                 |
+| `icon`                  | `React.ReactNode`                                                                        | Custom icon for the toast, can be a React component or JSX.           |
+| **iconProps**           | `object`                                                                                 | Customization options for the icon.                                   |
+| `iconProps.visible`     | `boolean`                                                                                | Shows or hides the icon. Default is `true`.                           |
+| `iconProps.className`   | `string`                                                                                 | Custom class for the icon.                                            |
+| `iconProps.style`       | `React.CSSProperties`                                                                    | Inline styles for the icon.                                           |
 
 ## ToastProps
 
@@ -275,13 +275,13 @@ Provides all the properties passed to the toast component .
 
 ## ToastProvider
 
-| Prop            | Type                | Default | Description                                      |
-|-----------------|---------------------|---------|--------------------------------------------------|
-| `newestFirst`   | `boolean`           | `true`  | Whether to display the newest toast first.       |
-| `gutter`        | `number`            | `8`     | The space (in pixels) between each toast.        |
-| `containerOptions` | `object`          | `undefined` | Customize the toast container. See [containerOptions](#containerOptions) below. |
-| `toastOptions`  | `object`            | `undefined` | Default options for all toasts. See [toastOptions](#toastOptions) below. |
-| `toastStyles`   | `object`            | `undefined` | Customize the toast styles. See [toastStyles](#toastStyles) below. |
+| Prop               | Type      | Default     | Description                                                                     |
+|--------------------|-----------|-------------|---------------------------------------------------------------------------------|
+| `newestFirst`      | `boolean` | `true`      | Whether to display the newest toast first.                                      |
+| `gutter`           | `number`  | `8`         | The space (in pixels) between each toast.                                       |
+| `containerOptions` | `object`  | `undefined` | Customize the toast container. See [containerOptions](#containerOptions) below. |
+| `toastOptions`     | `object`  | `undefined` | Default options for all toasts. See [toastOptions](#toastOptions) below.        |
+| `toastStyles`      | `object`  | `undefined` | Customize the toast styles. See [toastStyles](#toastStyles) below.              |
 
 ### Example for `newestFirst`
 
@@ -306,12 +306,12 @@ This will add a 16px space between each toast.
 
 ## containerOptions
 
-| Prop             | Type                  | Description                                                                        |
-|------------------|-----------------------|------------------------------------------------------------------------------------|
-| `className`      | `string`              | Add a custom class to the container.                                               |
-| `style`          | `React.CSSProperties` | Inline styles for the container.                                                   |
-| `component`      | `React.ElementType<ToastContainerProps>`   | A custom component to render the toast container.                                         |
-| `portalSelector` | `Element `  or `DocumentFragment`      | The DOM node or fragment where the toast container is rendered. Default is `body`. |
+| Prop             | Type                                     | Description                                                                        |
+|------------------|------------------------------------------|------------------------------------------------------------------------------------|
+| `className`      | `string`                                 | Add a custom class to the container.                                               |
+| `style`          | `React.CSSProperties`                    | Inline styles for the container.                                                   |
+| `component`      | `React.ElementType<ToastContainerProps>` | A custom component to render the toast container.                                  |
+| `portalSelector` | `Element `  or `DocumentFragment`        | The DOM node or fragment where the toast container is rendered. Default is `body`. |
 
 ### Example with a custom container component
 
@@ -339,15 +339,15 @@ This will render the toasts inside the element with the ID `toast-root`.
 
 ## toastOptions
 
-| Prop Name  | Type                   | Description                                                                                                                                                                                         |
-|------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ...toastOptions | [ToastOptions](#advanced-options-for-toasts) | Extends all properties from ToastOptions and serves as the default configuration for all toasts. Each toast type (e.g., success, error ,..etc) can override these defaults with its specific options. || **successOptions** | [ToastOptions](#advanced-options-for-toasts) | Specific options for success toasts. |
-| `errorOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for error toasts.                                                                                                                                                                  |
-| `warningOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for warning toasts.                                                                                                                                                                |
-| `infoOptions`| [ToastOptions](#advanced-options-for-toasts) | Specific options for info toasts.                                                                                                                                                                   |
-| `emptyOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for empty toasts.                                                                                                                                                                  |
-| `loadingOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for loading toasts.                                                                                                                                                                |
-| `component` | `React.ElementType<`[ToastProps](#toastprops)`>`  | Custom component to use for individual toasts.  |
+| Prop Name        | Type                                             | Description                                                                                                                                                                                           |
+|------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ...toastOptions  | [ToastOptions](#advanced-options-for-toasts)     | Extends all properties from ToastOptions and serves as the default configuration for all toasts. Each toast type (e.g., success, error ,..etc) can override these defaults with its specific options. || **successOptions** | [ToastOptions](#advanced-options-for-toasts) | Specific options for success toasts. |
+| `errorOptions`   | [ToastOptions](#advanced-options-for-toasts)     | Specific options for error toasts.                                                                                                                                                                    |
+| `warningOptions` | [ToastOptions](#advanced-options-for-toasts)     | Specific options for warning toasts.                                                                                                                                                                  |
+| `infoOptions`    | [ToastOptions](#advanced-options-for-toasts)     | Specific options for info toasts.                                                                                                                                                                     |
+| `emptyOptions`   | [ToastOptions](#advanced-options-for-toasts)     | Specific options for empty toasts.                                                                                                                                                                    |
+| `loadingOptions` | [ToastOptions](#advanced-options-for-toasts)     | Specific options for loading toasts.                                                                                                                                                                  |
+| `component`      | `React.ElementType<`[ToastProps](#toastprops)`>` | Custom component to use for individual toasts.                                                                                                                                                        |
 
 
 ### Example for `toastOptions`
@@ -402,23 +402,24 @@ const CustomToastComponent: FunctionComponent<ToastProps> = ({content ,icon ,onC
 ## toastStyles
 
 
-| Prop Name           | Type        | Default     | Description |
-|---------------------|-------------|-------------|-------------|
-| **`toastMaxWidth`**    | `string`    | `auto`      | Maximum width of the toast. |
-| **`toastMinWidth`**    | `string`    | `200px`     | Minimum width of the toast. |
-| **`toastMinHeight`**   | `string`    | `auto`      | Minimum height of the toast. |
-| **`toastFontFamily`**  | `string`    | `inherit`   | Font family for the toast content. |
-| **`toastBgColor`**     | `string`    | `#fff`      | Background color of the toast. |
-| **`toastTextColor`**   | `string`    | `#000`      | Text color of the toast content. |
-| **`toastRadius`**      | `string`    | `4px`       | Border radius of the toast. |
-| **`toastPadding`**     | `string`    | `8px`       | Padding inside the toast. |
-| **`toastBoxShadow`**   | `string`    | `none`      | Box shadow of the toast. |
-| **`toastSuccessColor`**| `string`    | `#28a745`   | Background color for success toasts. |
-| **`toastErrorColor`**  | `string`    | `#dc3545`   | Background color for error toasts. |
-| **`toastWarningColor`**| `string`    | `#ffc107`   | Background color for warning toasts. |
-| **`toastInfoColor`**   | `string`    | `#17a2b8`   | Background color for info toasts. |
-| **`toastLoaderColor`** | `string`    | `#007bff`   | Color for the loader in the toast. |
-| **`toastLoaderAreaColor`** | `string`| `#f8f9fa`   | Background color for the loader area. |
+| Prop Name              | Type     | Description                           |
+|------------------------|----------|---------------------------------------|
+| `toastMaxWidth`        | `string` | Maximum width of the toast.           |
+| `toastMinWidth`        | `string` | Minimum width of the toast.           |
+| `toastMinHeight`       | `string` | Minimum height of the toast.          |
+| `toastFontFamily`      | `string` | Font family for the toast content.    |
+| `toastBgColor`         | `string` | Background color of the toast.        |
+| `toastTextColor`       | `string` | Text color of the toast content.      |
+| `toastRadius`          | `string` | Border radius of the toast.           |
+| `toastPadding`         | `string` | Padding inside the toast.             |
+| `toastBoxShadow`       | `string` | Box shadow of the toast.              |
+| `toastEmptyColor`      | `string` | color for empty toasts (icon).        |
+| `toastSuccessColor`    | `string` | color for success toasts (icon).      |
+| `toastErrorColor`      | `string` | color for error toasts (icon).        |
+| `toastWarningColor`    | `string` | color for warning toasts (icon).      |
+| `toastInfoColor`       | `string` | color for info toasts (icon).         |
+| `toastLoaderColor`     | `string` | Color for the loader in the toast.    |
+| `toastLoaderAreaColor` | `string` | Background color for the loader area. |
 
 ### Example for `toastStyles`
 
@@ -433,5 +434,64 @@ const CustomToastComponent: FunctionComponent<ToastProps> = ({content ,icon ,onC
 
 This will set the background color to dark and the text color to white.
 
+# `useToastStore`
 
+The `useToastStore` hook provides access to the current toast notifications and a `dispatch` function to manage toast actions.
 
+## Return Value
+
+The hook returns an object containing two keys:
+
+- **`toasts`**: An array of the current active toasts.
+- **`dispatch`**: A function to dispatch actions for toast management.
+
+```ts
+const { toasts, dispatch } = useToastStore();
+```
+## Actions
+Below is a table of actions you can dispatch to manage toasts:
+
+| Action Type          | Description                                    |
+|---------------------|------------------------------------------------|
+| `ADD_TOAST`           | Adds a new toast to the state.                |
+| `REMOVE_TOAST`        | Removes a toast by its `id`.                     |
+| `UPDATE_TOAST`        | Updates an existing toast's properties.        |
+| `REMOVE_ALL_TOASTS`   | Removes all active toasts.                     |
+
+### Usage Example
+
+```tsx
+import {useToastStore ,ActionTypes} from 'react-toast-plus';
+
+const ToastManager = () => {
+    const {toasts, dispatch} = useToastStore();
+
+    return (
+        <div>
+            {toasts.map((toast) => (
+                <div key={toast.id}>{toast.content}</div>
+            ))}
+            <button
+                onClick={() =>
+                    dispatch({
+                        type: ActionTypes.ADD_TOAST,
+                        toast: {
+                            id: `${Date.now()}`, // Unique ID
+                            content: "New Toast Added!",
+                            type: "success",
+                            options: {autoClose: true, lifetime: 3000},
+                        },
+                    })
+                }
+            >
+                Add Toast
+            </button>
+            <button
+                onClick={() => dispatch({ type: ActionTypes.REMOVE_ALL_TOASTS })}
+            >
+                Remove All Toasts
+            </button>
+        </div>
+    );
+};
+```
