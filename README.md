@@ -32,7 +32,7 @@ yarn add react-toast-plus
 ### Basic Setup
 Wrap your application with the `ToastProvider` to enable toast notifications:
 
-```jsx
+```typescript jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ToastProvider } from 'react-toast-plus';
@@ -49,7 +49,7 @@ ReactDOM.render(
 
 You can use the `useToast` hook to add toasts:
 
-```jsx
+```typescript jsx
 import React from 'react';
 import { useToast } from 'react-toast-plus';
 
@@ -188,6 +188,11 @@ You can remove toasts using the following methods from `useToast()`:
 const { removeToast } = useToast();
 
 removeToast(toastId);  // Removes the toast with the given id
+
+
+
+// if you want to delete by index
+removeToast.byIndex(0);  // Removes the first toast
 ```
 
 ### Remove All Toasts
@@ -205,7 +210,9 @@ You can update existing toasts using the `updateToast` function. Here's an examp
 ```tsx
 const { updateToast } = useToast();
 
-const { id } = addToast.loading("Loading...");
+const { id } = addToast("Loading..." ,'loading',{
+    placement:"bottom-right"
+});
 setTimeout(() => {
     updateToast({
         id,
@@ -245,4 +252,166 @@ Here’s the full list of toast options:
 | `iconProps.visible`    | `boolean`                                                                                | Shows or hides the icon. Default is `true`.                           |
 | `iconProps.className`  | `string`                                                                                 | Custom class for the icon.                                            |
 | `iconProps.style`      | `React.CSSProperties`                                                                    | Inline styles for the icon.                                           |
+
+
+## ToastProvider
+
+| Prop            | Type                | Default | Description                                      |
+|-----------------|---------------------|---------|--------------------------------------------------|
+| `newestFirst`   | `boolean`           | `true`  | Whether to display the newest toast first.       |
+| `gutter`        | `number`            | `8`     | The space (in pixels) between each toast.        |
+| `containerOptions` | `object`          | `undefined` | Customize the toast container. See [containerOptions](#containerOptions) below. |
+| `toastOptions`  | `object`            | `undefined` | Default options for all toasts. See [toastOptions](#toastOptions) below. |
+| `toastStyles`   | `object`            | `undefined` | Customize the toast styles. See [toastStyles](#toastStyles) below. |
+
+### Example for `newestFirst`
+
+```typescript jsx
+<ToastProvider newestFirst={false}>
+  <App />
+</ToastProvider>
+```
+
+This will display the oldest toast first.
+
+### Example for `gutter`
+
+```typescript jsx
+<ToastProvider gutter={16}>
+  <App />
+</ToastProvider>
+```
+
+This will add a 16px space between each toast.
+
+
+## containerOptions
+
+| Prop             | Type                  | Description                                                                        |
+|------------------|-----------------------|------------------------------------------------------------------------------------|
+| `className`      | `string`              | Add a custom class to the container.                                               |
+| `style`          | `React.CSSProperties` | Inline styles for the container.                                                   |
+| `component`      | `React.ElementType<ToastContainerProps>`   | A custom component to render the toast container.                                         |
+| `portalSelector` | `Element `  or `DocumentFragment`      | The DOM node or fragment where the toast container is rendered. Default is `body`. |
+
+### Example with a custom container component
+
+```typescript jsx
+const CustomContainer = ({ children, ...props }) => {
+  return <div className="custom-container" {...props}>{children}</div>;
+};
+
+<ToastProvider containerOptions={{ component: CustomContainer }}>
+  <App />
+</ToastProvider>
+```
+
+This will render the toasts inside the custom container.
+
+### Example with a portal
+
+```typescript jsx
+<ToastProvider containerOptions={{ portalSelector: document.getElementById('toast-root') }}>
+  <App />
+</ToastProvider>
+```
+
+This will render the toasts inside the element with the ID `toast-root`.
+
+## toastOptions
+
+| Prop Name  | Type                   | Description                                                                                                                                                                                         |
+|------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ...toastOptions | [ToastOptions](#advanced-options-for-toasts) | Extends all properties from ToastOptions and serves as the default configuration for all toasts. Each toast type (e.g., success, error ,..etc) can override these defaults with its specific options. || **successOptions** | [ToastOptions](#advanced-options-for-toasts) | Specific options for success toasts. |
+| `errorOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for error toasts.                                                                                                                                                                  |
+| `warningOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for warning toasts.                                                                                                                                                                |
+| `infoOptions`| [ToastOptions](#advanced-options-for-toasts) | Specific options for info toasts.                                                                                                                                                                   |
+| `emptyOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for empty toasts.                                                                                                                                                                  |
+| `loadingOptions` | [ToastOptions](#advanced-options-for-toasts) | Specific options for loading toasts.                                                                                                                                                                |
+| `component` | `React.ElementType<ToastProps>`  | Custom component to use for individual toasts.  |
+
+
+### Example for `toastOptions`
+
+```typescript jsx
+<ToastProvider toastOptions={{ className: 'toast', lifetime: 3000 }}>
+  <App />
+</ToastProvider>
+```
+
+This will apply the class `toast` and set the lifetime of all toasts to 3000ms.
+
+### Example for Typed options
+
+```typescript jsx
+<ToastProvider toastOptions={{
+  closeOnClick: true,
+  successOptions: {
+      style: { backgroundColor: 'green' },
+      icon: <cutomIcon/>
+  },
+  errorOptions: { 
+      closeButton: { visible: false } ,
+      lifetime: 5000
+  },
+}}>
+  <App />
+</ToastProvider>
+```
+### Example for Custom Component
+```tsx
+const CustomToastComponent: FunctionComponent<ToastProps> = ({content ,icon ,onClose,style}) => {
+    return (
+        <div className="custom-toast" style={style}>
+        <div className="custom-toast-content">
+            {icon}
+            <div className="custom-toast-text">{content}</div>
+        </div>
+        <button onClick={onClose}>Close</button>
+        </div>
+    );
+    };
+
+
+<ToastProvider toastOptions={{
+  component: CustomToastComponent
+}}>
+  <App />
+</ToastProvider>
+```
+
+## toastStyles
+
+
+| Prop Name           | Type        | Default     | Description |
+|---------------------|-------------|-------------|-------------|
+| **`toastMaxWidth`**    | `string`    | `auto`      | Maximum width of the toast. |
+| **`toastMinWidth`**    | `string`    | `200px`     | Minimum width of the toast. |
+| **`toastMinHeight`**   | `string`    | `auto`      | Minimum height of the toast. |
+| **`toastFontFamily`**  | `string`    | `inherit`   | Font family for the toast content. |
+| **`toastBgColor`**     | `string`    | `#fff`      | Background color of the toast. |
+| **`toastTextColor`**   | `string`    | `#000`      | Text color of the toast content. |
+| **`toastRadius`**      | `string`    | `4px`       | Border radius of the toast. |
+| **`toastPadding`**     | `string`    | `8px`       | Padding inside the toast. |
+| **`toastBoxShadow`**   | `string`    | `none`      | Box shadow of the toast. |
+| **`toastSuccessColor`**| `string`    | `#28a745`   | Background color for success toasts. |
+| **`toastErrorColor`**  | `string`    | `#dc3545`   | Background color for error toasts. |
+| **`toastWarningColor`**| `string`    | `#ffc107`   | Background color for warning toasts. |
+| **`toastInfoColor`**   | `string`    | `#17a2b8`   | Background color for info toasts. |
+| **`toastLoaderColor`** | `string`    | `#007bff`   | Color for the loader in the toast. |
+| **`toastLoaderAreaColor`** | `string`| `#f8f9fa`   | Background color for the loader area. |
+
+### Example for `toastStyles`
+
+```jsx
+<ToastProvider toastStyles={{
+  toastBgColor: '#333',
+  toastTextColor: '#fff',
+}}>
+  <App />
+</ToastProvider>
+```
+
+This will set the background color to dark and the text color to white.
+
 
