@@ -182,7 +182,6 @@ addToast.promise(someAsyncFunction, {
     success: (data) => `Success: {data}`,
     error: (error) => `Error: ${error}`
 },{
-    autoClose: true,
     transition: "slide",
     placement: "top-center",
     success: {
@@ -560,16 +559,19 @@ const CustomToaster: React.FunctionComponent<ToastProps> = ({id,type,  onClose, 
 
   return (
     <StyledToaster style={style}>
-      <StyledToastContainer>
+      <div style{{
+                 width:"20px",
+                 height:"20px"
+                 }}>
+          <SuccessIcon />
+       </div>
         <StyledToasterContent>
-           <SuccessIcon />
           <p>Hello from componemt</p>
+        </StyledToasterContent>
           <StyledProgressBar type={type} duration={lifetime} state={isRunning?"running":"paused"} />
           <StyledCloseButton onClick={() => onClose && onClose(id)}>
             <CloseIcon />
           </StyledCloseButton>
-        </StyledToasterContent>
-      </StyledToastContainer>
     </StyledToaster>
   );
 };
