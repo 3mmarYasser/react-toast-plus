@@ -554,24 +554,36 @@ Here’s an example where the `CustomToaster` is a `React.FunctionComponent<`[To
 import { StyledToaster, StyledProgressBar, StyledCloseButton, StyledToastContainer, StyledToasterContent, SuccessIcon, CloseIcon } from 'react-toast-plus';
 import { ToastProps } from 'react-toast-plus';
 
-const CustomToaster: React.FunctionComponent<ToastProps> = ({id,type,  onClose, options  ,isRunning}) => {
-  const { autoClose = true, lifetime = 5000 ,style } = options || {};
+const CustomToaster: React.FunctionComponent<ToastProps> = ({
+  id,
+  type,
+  onClose,
+  options,
+  isRunning,
+}) => {
+  const { autoClose = true, lifetime = 5000, style } = options || {};
 
   return (
     <StyledToaster style={style}>
-      <div style{{
-                 width:"20px",
-                 height:"20px"
-                 }}>
-          <SuccessIcon />
-       </div>
-        <StyledToasterContent>
-          <p>Hello from componemt</p>
-        </StyledToasterContent>
-          <StyledProgressBar type={type} duration={lifetime} state={isRunning?"running":"paused"} />
-          <StyledCloseButton onClick={() => onClose && onClose(id)}>
-            <CloseIcon />
-          </StyledCloseButton>
+      <div
+        style={{
+          width: 20,
+          height: 20,
+        }}
+      >
+        <SuccessIcon />
+      </div>
+      <StyledToasterContent>
+        <p>Hello from componemt</p>
+      </StyledToasterContent>
+      <StyledProgressBar
+        type={type || "empty"}
+        duration={lifetime}
+        state={isRunning ? "running" : "paused"}
+      />
+      <StyledCloseButton onClick={() => onClose && onClose(id)}>
+        <CloseIcon />
+      </StyledCloseButton>
     </StyledToaster>
   );
 };
