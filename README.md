@@ -397,17 +397,29 @@ This will apply the class `toast` and set the lifetime of all toasts to 3000ms.
 ```
 ### Example for Custom Component
 ```tsx
-const CustomToastComponent: FunctionComponent<ToastProps> = ({content ,icon ,onClose,style}) => {
-    return (
-        <div className="custom-toast" style={style}>
-        <div className="custom-toast-content">
-            {icon}
-            <div className="custom-toast-text">{content}</div>
-        </div>
-        <button onClick={onClose}>Close</button>
-        </div>
-    );
-    };
+const CustomToastComponent: FunctionComponent<ToastProps> = (props) => {
+  const { content, id, onClose, options } = props;
+  const { style, icon } = options || {};
+  const renderContent = () => {
+    if (typeof content === "string") {
+      return content;
+    } else if (isValidElement(content)) {
+      return content;
+    } else if (typeof content === "function") {
+      return content(props);
+    }
+    return null;
+  };
+  return (
+    <div className="custom-toast" style={style}>
+      <div className="custom-toast-content">
+        {icon}
+        <div className="custom-toast-text">{renderContent()}</div>
+      </div>
+      <button onClick={() => onClose(id)}>Close</button>
+    </div>
+  );
+};
 
 
 <ToastProvider toastOptions={{
