@@ -91,6 +91,7 @@ interface ToastProviderProps{
     toastOptions?:MainToastOptions;
     gutter?:number;
     toastStyles?:Partial<ToastStylesProps>;
+    portalActive?:boolean;
 }
 
 
